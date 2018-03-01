@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="lib/css/fbphotobox.css">
+    <link rel="stylesheet" href="lib/css/rcrop.min.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="lib/css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/app.css" />
+    <title>Register</title>
+</head>
+
+<body>
+<div data-role="page" id="register">
+	<div data-role="header">
+		<div class="logo"><a href="welcome.html">freely</a></div>
+		<h1>Register</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<!-- Share texts -->
+		<div class="panel panel-default share clearfix-xs" id="status-panel">
+			<div class="panel-body panel-padding">
+				<h3>Sign Up</h3>
+				<form id="registerFrm">
+					<label for="txt-first-name">First Name</label>
+					<input type="text" name="first_name" id="txt-first-name" value="" autocomplete="off">
+					<label for="txt-last-name">Last Name</label>
+					<input type="text" name="last_name" id="txt-last-name" value="" autocomplete="off">
+					<label for="txt-email">Email Address</label>
+					<input type="text" name="email" id="txt-email" value="" autocomplete="off">
+					<label for="txt-password">Password</label>
+					<input type="password" name="password" id="txt-password" value="" autocomplete="off">
+					<label for="txt-password-confirm">Confirm Password</label>
+					<input type="password" name="password_confirm" id="txt-password-confirm" value="" autocomplete="off">
+					<!--<a href="#dlg-sign-up-sent" data-rel="popup" data-transition="pop" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>	-->
+					<button type="button" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5 registerBtn">Submit</button>
+				</form>
+			</div>
+		</div>
+		<div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;">
+			<div data-role="header">
+				<h1>Almost done...</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<h3>Confirm Your Email Address</h3>
+				<p>We sent you an email with instructions on how to confirm your email address. Please check your inbox and follow the instructions in the email.</p>
+				<div class="mc-text-center"><a href="login.html" class="ui-btn ui-corner-all ui-shadow ui-btn-b mc-top-margin-1-5">OK</a></div>
+			</div>
+		</div>	
+	</div>
+   <!-- /content -->
+</div>
+   
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/js/background-blur.min.js"></script>
+    <script type="text/javascript" src="lib/js/fbphotobox.js"></script>
+    <script type="text/javascript" src="lib/js/rcrop.min.js"></script>
+    <script type="text/javascript" src="lib/js/jqm.page.params.js"></script>
+    <script type="text/javascript" src="lib/js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="lib/js/app.js"></script>
+    <script type="text/javascript">
+       // app.initialize();
+    </script>
+</body>
+</html>
