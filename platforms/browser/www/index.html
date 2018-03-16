@@ -1,111 +1,84 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-    <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="lib/css/fbphotobox.css">
-    <link rel="stylesheet" href="lib/css/rcrop.min.css" media="screen" type="text/css">
-    
-    <link rel="stylesheet" href="lib/css/jquery.mobile-1.4.5.min.css">
-    <link rel="stylesheet" type="text/css" href="lib/css/app.css" />
-    <title>ProLibertyGroup</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>My App</title>
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-<div id="splash"><div id="sp_inner"><img src="lib/img/logo.png"><h1>ProLibertyGroup</h1></div></div>
-<div data-role="page" id="home">
-	<div data-role="header">
-		<div class="logo"><a href="#home">freely</a></div>
-		<!--<h1>Page Title</h1>-->
-		<div class="nav-avatar"></div>
-	</div><!-- /header -->
-	<!-- Profile menu -->
-	<div id="profile_menu" data-role="panel" data-position="right" data-display="overlay"></div>
-	<!-- End of Profile menu -->
+    <!-- Status bar overlay for full screen mode (PhoneGap) -->
+    <div class="statusbar-overlay"></div>
 
-	<div role="main" class="ui-content">
-		<!-- Share texts -->
-		<div class="panel panel-default share clearfix-xs" id="status-panel">
-			<div class="panel-body">
-				<form method="post" id="statusFrm" enctype="multipart/form-data" multiple="">
-					<input name="post_user_id" value="1" type="hidden">
-					<input name="posted_url" value="" type="hidden">
-					<textarea name="status" class="form-control share-text" rows="3" placeholder="Share your status..." data-role="none"></textarea>
-					<input name="status_video" id="status_video" data-role="none" accept="video/*" type="file">
-					<div id="statusPicPreview"></div>
-				</form>
-			</div>
-			<div class="panel-footer share-buttons">
-			 <!-- <span class="postLocation"><i class="fa fa-map-marker"></i></span>-->
-			  <span class="postPhoto"><i class="fa fa-camera-retro"></i></span>
-			   <!--<span class="postVideo"><i class="fa fa-video-camera"></i></span>-->
-			  <button type="button" class="btn btn-primary btn-xs pull-right postStatusBtn" data-role="none">Post</button>
-			</div>
-		</div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+        <div class="content-block">
+            <p>Left panel content goes here</p>
+        </div>
+    </div>
 
-		<!-- Posts-->
-		<div id="home-post"></div>
-	</div><!-- /content -->
+    <!-- Views -->
+    <div class="views">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <!-- Top Navbar-->
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="nav-left">
+                    	<!--<div id="nav-profile-icon"><img src="http://cbhllc.net/lib/php/timthumb.php?src=lib/images/user_images/5a9a0836961c8.jpg&amp;h=35&amp;w=35&amp;zc=1"></div>-->
+                    </div>
+                    <div class="center sliding">Awesome App</div>
+                    <div class="right">
+                        <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, "data-page" contains page name -->
+                <div data-page="index" class="page">
+                    <!-- Scrollable page content -->
+                    <div class="page-content">
+                        <div class="content-block">
+                            <div class="page-panel">
+								<textarea class="input-round" placeholder="Share Your Status"></textarea>
+                           		<span class="postPhoto"><i class="fa fa-camera-retro"></i></span>
+								   <!--<span class="postVideo"><i class="fa fa-video-camera"></i></span>-->
+								<button type="button" class="btn btn-primary btn-xs btn-round pull-right postStatusBtn">Post</button>
+                            </div>
+                            <!-- Stream -->
+                            <div class="page-panel">
+                            
+							</div>
+                            <a href="welcome.html">Welcome</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <!-- Toolbar links -->
+                    <a href="#" class="link">Link 1</a>
+                    <a href="#" class="link">Link 2</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-	<div data-role="popup" id="popupBox">
-		<div data-role="header" id="popupHeader"></div>
-		<div role="main" class="ui-content" id="popupBody"></div>
-		<div data-role="footer">
-			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
-		</div>
-	</div>
-</div>
-
-<div data-role="page" id="post-page">
-	<div data-role="header">
-		<div class="logo"><a href="#home" data-transition="slide" data-direction="reverse">freely</a></div>
-		<div class="nav-avatar">
-			<a href="#profile_menu"><img src="http://cbhllc.net/lib/php/timthumb.php?src=lib/images/user_images/5a43d6d1dba2f.jpg&amp;h=45&amp;w=45&amp;zc=1"></a>
-		</div>
-	</div><!-- /header -->
-	<!-- Profile menu -->
-	<div id="profile_menu" data-role="panel" data-position="right" data-display="overlay"></div>
-	<!-- End of Profile menu -->
-	
-</div>
-
-<!-- Profile page -->
-<div data-role="page" id="profile-page">
-	<div data-role="header">
-		<div class="logo"><a href="#home" data-transition="slide" data-direction="reverse">freely</a></div>
-		<div class="nav-avatar"></div>
-	</div><!-- /header -->
-	<!-- Profile menu -->
-	<div id="profile_menu" data-role="panel" data-position="right" data-display="overlay"></div>
-	<!-- End of Profile menu -->
-	<div role="main" class="ui-content">
-		<div id="profile-content-header"></div>
-		<div id="profile-content"></div>
-	</div>
-
-</div>
-   
     <script type="text/javascript" src="cordova.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/js/background-blur.min.js"></script>
-    <script type="text/javascript" src="lib/js/fbphotobox.js"></script>
-    <script type="text/javascript" src="lib/js/rcrop.min.js"></script>
-    <script type="text/javascript" src="lib/js/jqm.page.params.js"></script>
-    <script type="text/javascript" src="lib/js/jquery.mobile-1.4.5.min.js"></script>
-    <script type="text/javascript" src="lib/js/app.js"></script>
-    <script type="text/javascript">
-       // app.initialize();
-    </script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </body>
+
 </html>
