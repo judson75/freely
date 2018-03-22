@@ -74,6 +74,28 @@
 	//var storage.app_user = 1;
     window.common = common;
 	
+	$(document).on('click', '.nav-menu-button', function() {
+		if($('#user-nav').hasClass('open')) {
+			$('#user-nav').removeClass('open');
+			$('#user-nav').animate({
+				'right' : '-100%',
+			}, 200);
+		}
+		else {
+			$('#user-nav').addClass('open');
+			$('#user-nav').animate({
+				'right' : '0',
+			}, 200);
+		}
+	});
+	
+	$(document).on('click', '#user-nav-close', function() {
+		$('#user-nav').removeClass('open');
+		$('#user-nav').animate({
+			'right' : '-100%',
+		}, 200);
+	});
+	
 	$(document).on('click', '.edit-panel i', function() {
 		if($(this).next('.edit-dropdown').hasClass('open')) {
 			$(this).next('.edit-dropdown').removeClass('open');
@@ -89,6 +111,36 @@
 		}
 	});
 	
+	var submitIcon = $('.searchbox-icon');
+	var inputBox = $('.searchbox-input');
+	var searchBox = $('.searchbox');
+	var isOpen = false;
+	submitIcon.click(function(){
+		if(isOpen == false){
+			searchBox.addClass('searchbox-open');
+			inputBox.focus();
+			isOpen = true;
+		} else {
+			searchBox.removeClass('searchbox-open');
+			inputBox.focusout();
+			isOpen = false;
+		}
+	});  
+	 
+	submitIcon.mouseup(function(){
+		return false;
+	});
+	
+	searchBox.mouseup(function(){
+		return false;
+	});
+	
+	$(document).mouseup(function(){
+		if(isOpen == true){
+			$('.searchbox-icon').css('display','block');
+			submitIcon.click();
+		}
+	});
 	
 	/* Initial Page Load */
 	//displayHomepage();
@@ -135,13 +187,13 @@
 			}
 		});
 		request.done(function(data) { 
-			console.log("home DATA: " + data);
+			//console.log("home DATA: " + data);
 			//alert("home DATA: " + data);
 			var obj = $.parseJSON(data);
 			if(obj.code === 1) {
 				$('.home-content').html(obj.html);
 				loading('hide');
-				return html;
+				//return html;
 			}
 		});
 		request.fail(function(jqXHR, textStatus, thrownError) {			
@@ -153,7 +205,8 @@
 	}
 	
 	function displayUserNav() {
-		var user = common.storage.getItem("app_user");
+		//var user = common.storage.getItem("app_user");
+		var user = 1;
 		var request =  $.ajax({
 			data: ({format: 'json', method: 'get', action : 'user_nav', user : user}),
 			type: "GET",
@@ -164,72 +217,12 @@
 			}
 		});
 		request.done(function(data) { 
-			//console.log("User Details DATA: " + data);
+			console.log("User Details DATA: " + data);
 			var obj = $.parseJSON(data);
+			$('#user-nav').find('ul').remove();
 			if(obj.resp === 'success') {
 				$('.nav-avatar').html('<a href="#profile_menu"><img src="' + common.siteURL + '/lib/php/timthumb.php?src=' + common.siteURL + '/' + obj.user.avatar + '&amp;h=45&amp;w=45&amp;zc=1"></a>');
-				/*
-				var profile_nav = '<ul>';
-				profile_nav += '<li>';
-				profile_nav += '<div class="nav-profile-link">';
-				profile_nav += '' + obj.user.name + '';
-				profile_nav += '<a href="#inner-pages?page=profile&user_slug=' + obj.user.username + '" data-transition="slide">My Profile</a>';
-				profile_nav += '<span class="pull-right nav-profile-edit"><a href="/edit-profile.html" data-transition="slide">Edit Profile</a></span>';
-				profile_nav += '</div>';
-				profile_nav += '</li>';
-				profile_nav += '<li class="li-seperator"></li>';
-				//console.log('FREINDS: ' + obj.user.friends);
-				//console.log(obj.user.friend_count);
-				if(obj.user.friends !== '') {
-					profile_nav += '<li class="li-header">Friends</li>';
-					$.each( obj.user.friends, function( key, friend ) {
-					 	profile_nav += '';
-						profile_nav += '<li class="user-li">';
-						profile_nav += '<div class="media-left">';
-						profile_nav += '<a href="#inner-pages?page=profile&user_slug=' + friend.username + '" data-transition="slide">';
-						profile_nav += '<img src="' + common.siteURL +'/lib/php/timthumb.php?src=' + common.siteURL + '/' + friend.avatar + '&h=25&w=25&zc=1" class="media-object">';
-						profile_nav += '</a>';
-						//if($main->is_online($fid)) {
-						//	echo '<span class="online-dot user-online-' . $fid . '"></span>';
-						//}
-						profile_nav += '</div>';
-						profile_nav += '<div class="media-body">';
-						profile_nav += '<a href="#inner-pages?page=profile&user_slug=' + friend.username + '" data-transition="slide">' + friend.name + '</a>';
-						profile_nav += '</div>';
-						profile_nav += '<div class="clr"></div>';
-						profile_nav += '</li>';
-					});
-				}
-				profile_nav += '<li class="see-all-link"><a href="my-friends.html">See All Friends</a></li>';
-				profile_nav += '<li><a href="members.html" data-transition="slide"><i class="fa fa-search" aria-hidden="true"></i> Find Friends</a></li>';
-				profile_nav += '<li class="li-seperator"></li>';
-				//console.log('GROUPS: ' + obj.user.groups);
-				if(obj.user.groups !== '') {
-					profile_nav += '<li class="li-header">My Groups</li>';
-					$.each( obj.user.groups, function( key, group ) {
-						profile_nav += '<li class="user-li">';
-						profile_nav += '<div class="media-left">';
-						profile_nav += '<a href="group.html?group=' +  group.slug + '" data-transition="slide">';
-						profile_nav += '<img src="' + common.siteURL + '/lib/php/timthumb.php?src=' + common.siteURL + '/' + group.group_avatar + '&h=25&w=25&zc=1" class="media-object">';
-						profile_nav += '</a>';
-						profile_nav += '</div>';
-						profile_nav += '<div class="media-body">';
-						profile_nav += '<a href="group.html?group=' + group.slug + '" data-transition="slide">' + group.name + '</a>';
-						profile_nav += '</div>';
-						profile_nav += '<div class="clr"></div>';
-						profile_nav += '</li>';
-					});
-					profile_nav += '';
-				}
-				profile_nav += '<li class="see-all-link"><a href="my-groups.html" data-transition="slide">See All Groups</a></li>';
-				profile_nav += '<li><a href="groups.html" data-transition="slide"><i class="fa fa-users" aria-hidden="true"></i> Find Groups</a></li>';
-				profile_nav += '<li><a href="create-group.html" data-transition="slide"><i class="fa fa-plus" aria-hidden="true"></i> Create Group</a></li>';
-				profile_nav += '<li class="li-seperator"></li>';
-				profile_nav += '<li><a href="logout.html"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>';
-				profile_nav += '</ul>';
-				*/
-				//console.log("HTML: " + profile_nav);
-				$('#profile_menu').html(obj.html);
+				$('#user-nav').append(obj.html);
 			}
 			else {
 				
@@ -274,6 +267,17 @@
 	
 	function callbackMethod() {
 		alert("BOOM");
+	}
+	
+	function buttonUp(){
+		var inputVal = $('.searchbox-input').val();
+		inputVal = $.trim(inputVal).length;
+		if( inputVal !== 0){
+			$('.searchbox-icon').css('display','none');
+		} else {
+			$('.searchbox-input').val('');
+			$('.searchbox-icon').css('display','block');
+		}
 	}
 	
 }());
