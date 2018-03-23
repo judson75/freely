@@ -82,7 +82,7 @@
 		}
 		
 		var p = $('header').offset().top;
-		console.log( "scrollTop:" + p );
+		//console.log( "scrollTop:" + p );
 		var top_m = p - 135;
 		//console.log(top_m);
 		if(p > 100) {
@@ -217,9 +217,64 @@
 			displayHomepage();
 			displayUserNav();
 		//}, 1500);
+			
 		
 		
+	});
+	
+	$(document).on('click', 'a', function(event) {
+		event.preventDefault();
+		//Get data type...
 		
+		//get href
+		var href = $(this).attr('href');
+console.log(href);
+		//does it have a hash, or other vars...
+		
+		//Get content
+//		$.get('profile.html', function (my_var) {
+//			alert(my_var);
+//		});
+		
+		//transitions, left or right ... slide-in-from-right
+		$('.screen').page();
+		//click
+		$('a').click(function() {
+			//href
+			//var href = $(this).attr('href');
+			var page = 'right';
+			if(href == 'index.html') {
+				var trans = 'slide-in-from-left';
+			}
+			else {
+				var trans = 'slide-in-from-right';
+			}
+			
+			$('.screen').page.transition(page, trans);
+		});
+		//});
+		//$(".screen").page().transition("11", "none");
+		//$(".remove-button").click(function () {
+		//	var id = $(".remove-input").val();
+	//		$(".screen").page().remove(id);
+	//	});
+	//	$(".shake-button").click(function () {
+	//		$(".screen").page().shake();
+	//	});
+		/*
+		$.ajax({
+            type: "GET",
+            dataType: "html",
+            cache: false,
+            url: 'profile.html',
+            data: '',
+            crossDomain: true,
+            success: function (data) {
+                ATSJBAjax = null;
+                if (callback != null) callback(data);
+            }
+        });
+		*/
 	});
 	
 	/*
@@ -343,5 +398,50 @@
 			$('.searchbox-icon').css('display','block');
 		}
 	}
+	
+	//Begin pickup...
+	$.fn.page = function() {
+		console.log(this.selector);
+		var $this = $(this.selector);
+		$this.addClass('page-container');
+		//Resize page...
+		var sw = $('.device').width();
+		var sl = 0;
+		$('.page-container .page').each(function( index ) {
+			$(this).css('width', sw);
+			$(this).css('left', sl);
+			sl = sl + sw;
+			//console.log( index + ": " + $( this ).text() );
+		});
+		
+		var transition = function (event) {
+		// @todo Do something on event
+		};
+		
+	};
+	
+	$.fn.page.transition = function(page, trans) {
+		console.log(page + ' ' + trans);
+		//
+		var sw = $('.device').width();
+		if(trans == 'slide-in-from-right') {
+			$('.page-container .page').each(function( index ) {
+				var tl = $(this).css('left');
+				var nl = parseInt(tl) - parseInt(sw);
+				$(this).animate({
+					'left' : nl,
+				}, 200);
+			});
+		}
+		else if(trans == 'slide-in-from-left') {
+			$('.page-container .page').each(function( index ) {
+				var tl = $(this).css('left');
+				var nl = parseInt(tl) + parseInt(sw);
+				$(this).animate({
+					'left' : nl,
+				}, 200);
+			});
+		}
+	};
 	
 }());

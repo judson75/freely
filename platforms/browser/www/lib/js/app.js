@@ -82,7 +82,7 @@
 		}
 		
 		var p = $('header').offset().top;
-		console.log( "scrollTop:" + p );
+		//console.log( "scrollTop:" + p );
 		var top_m = p - 135;
 		//console.log(top_m);
 		if(p > 100) {
@@ -217,9 +217,58 @@
 			displayHomepage();
 			displayUserNav();
 		//}, 1500);
+			
 		
 		
+	});
+	
+	$(document).on('click', 'a', function(event) {
+		event.preventDefault();
+		//Get data type...
 		
+		//get href
+		var href = $(this).attr('href');
+console.log(href);
+		//does it have a hash, or other vars...
+		
+		//Get content
+//		$.get('profile.html', function (my_var) {
+//			alert(my_var);
+//		});
+		
+		//transitions, left or right ... slide-in-from-right
+		var trans = 'slide-in-from-right';
+		$('.screen').page();
+		//$('.screen .page .navigate").click(function (ev) {
+			var page  = 'right';
+			//var trans = $(ev.target).attr("data-page-trans");
+			if ($(".screen").page().fetch(page) === null)
+				$(".screen").page().shake();
+			else
+				$(".screen").page().transition(page, trans);
+		//});
+		//$(".screen").page().transition("11", "none");
+		//$(".remove-button").click(function () {
+		//	var id = $(".remove-input").val();
+	//		$(".screen").page().remove(id);
+	//	});
+	//	$(".shake-button").click(function () {
+	//		$(".screen").page().shake();
+	//	});
+		/*
+		$.ajax({
+            type: "GET",
+            dataType: "html",
+            cache: false,
+            url: 'profile.html',
+            data: '',
+            crossDomain: true,
+            success: function (data) {
+                ATSJBAjax = null;
+                if (callback != null) callback(data);
+            }
+        });
+		*/
 	});
 	
 	/*
