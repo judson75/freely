@@ -74,6 +74,42 @@
 	//var storage.app_user = 1;
     window.common = common;
 	
+	$( window ).scroll(function() {
+		//Close search 
+		if(isOpen == true){
+			submitIcon.click();
+			submitIcon.removeClass('open');
+		}
+		
+		var p = $('header').offset().top;
+		console.log( "scrollTop:" + p );
+		var top_m = p - 135;
+		//console.log(top_m);
+		if(p > 100) {
+			if(!$('li.nav-status-btn').hasClass('open')) {
+				$('li.nav-status-btn').addClass('open');
+			}
+			if(!$('#status-bar').hasClass('fixed')) {
+				$('#status-bar').addClass('fixed');
+			}
+
+		}
+		else {
+			$('li.nav-status-btn').removeClass('open');
+			$('#status-bar').removeClass('fixed');
+		}
+	});
+	
+	$(document).on('click', '.nav-status-btn', function() {
+		if(!$('#status-bar').hasClass('open')) {
+			$('#status-bar').addClass('open');
+		}
+		else {
+			$('#status-bar').removeClass('open');
+		}
+
+	});
+	
 	$(document).on('click', '.nav-menu-button', function() {
 		if($('#user-nav').hasClass('open')) {
 			$('#user-nav').removeClass('open');
@@ -89,13 +125,36 @@
 		}
 	});
 	
+	$(document).on('click', '#user-alerts-close', function() {
+		$('#user-alerts').removeClass('open');
+		$('#user-alerts').animate({
+			'right' : '-100%',
+		}, 200);
+	});
+	
+	
+	$(document).on('click', '.nav-alerts-button', function() {
+		if($('#user-alerts').hasClass('open')) {
+			$('#user-alerts').removeClass('open');
+			$('#user-alerts').animate({
+				'right' : '-100%',
+			}, 200);
+		}
+		else {
+			$('#user-alerts').addClass('open');
+			$('#user-alerts').animate({
+				'right' : '0',
+			}, 200);
+		}
+	});
+	
 	$(document).on('click', '#user-nav-close', function() {
 		$('#user-nav').removeClass('open');
 		$('#user-nav').animate({
 			'right' : '-100%',
 		}, 200);
 	});
-	
+
 	$(document).on('click', '.edit-panel i', function() {
 		if($(this).next('.edit-dropdown').hasClass('open')) {
 			$(this).next('.edit-dropdown').removeClass('open');
@@ -120,10 +179,14 @@
 			searchBox.addClass('searchbox-open');
 			inputBox.focus();
 			isOpen = true;
+			submitIcon.addClass('open');
+			$('li.nav-status-btn').css('margin-right', '5px');
 		} else {
 			searchBox.removeClass('searchbox-open');
 			inputBox.focusout();
 			isOpen = false;
+			submitIcon.removeClass('open');
+			$('li.nav-status-btn').css('margin-right', '-15px');
 		}
 	});  
 	 
@@ -137,9 +200,10 @@
 	
 	$(document).mouseup(function(){
 		if(isOpen == true){
-			$('.searchbox-icon').css('display','block');
 			submitIcon.click();
+			submitIcon.removeClass('open');
 		}
+		
 	});
 	
 	/* Initial Page Load */

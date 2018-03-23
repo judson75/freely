@@ -23,10 +23,11 @@
 		<nav class="center"></nav>
 		<nav class="right">
 			<ul>
+				<li class="nav-status-btn"><i class="flaticon-pencil"></i></li>
 				<li>
 					<form class="searchbox">
 						<input type="search" placeholder="Search......" name="search" class="searchbox-input" onkeyup="buttonUp();" required>
-						<button type="submit" class="searchbox-submit"><i class="flaticon-magnifying-glass"></i></button>
+						<button type="button" class="searchbox-submit"><i class="flaticon-magnifying-glass"></i></button>
 					</form>
 					
 					<span class="searchbox-icon"><i class="flaticon-magnifying-glass"></i></span>
@@ -41,11 +42,16 @@
 	<div id="user-nav">
 		<div id="user-nav-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
 	</div>
+	<div id="user-alerts">
+		<div id="user-alerts-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+	</div>
 	<section id="home-page" class="content">
-		<div class="" id="search-bar">
-			<div id="search-input">
-				<input type="text" name="search" class="">
-				<button class=""><i class="flaticon-magnifying-glass"></i></button>
+		<div class="" id="status-bar">
+			<div id="status-input">
+				<input type="text" name="status" class="" placeholder="Share Your Status"> 
+				<button class="" type="button">POST</button>
+				<!--<button class="" style="padding: 5px 6px;"><i class="flaticon-camera-retro"></i></button>
+				-->
 			</div>
 		</div>
 		<div class="home-content"></div>
