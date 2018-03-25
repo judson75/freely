@@ -2,11 +2,15 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0); box-sizing: border-box;
 }
 
+html {
+	height: 100%;
+}
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     width:100%;
+    height: 100%;
 	/*background: url('../img/splash_bg.jpg') no-repeat; 
 	background-size: cover;*/
 	background-color: #e6ecf0;
@@ -30,6 +34,10 @@ button:focus {
 a {
 	text-decoration: none;
 	color: #4390bc;
+}
+
+.device {
+	height: 100%;
 }
 
 header {
@@ -67,6 +75,33 @@ textarea {
 	clear: both;
 }
 
+.popup-alert {
+	background: #4390bc;
+	color: #fff;
+	padding: 10px;
+	position: fixed;
+	display: block;
+	height: auto;
+	width: auto;
+	min-width: 250px;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	border: 2px solid #fff;
+	-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.45);
+	-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.45);
+	box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.45);
+	z-index: 998;
+	text-shadow: none;
+}
+
+.text-danger {
+	font-size: 12px;
+	color: #FF0000;
+	10px 0 0 10px;
+}
+
 .page-loading {
 	position: absolute;
 	height: 100%;
@@ -91,6 +126,32 @@ textarea {
 	padding: 10px;*/
 	border-radius: 10px;
 	overflow: hidden;
+}
+
+.divOverlay {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+
+.divOverlay.white{
+	background: rgba(255,255,255,.6);
+	color: #666;
+}
+
+.divOverlay.white .loading {
+	color: #4390bc;
+	position: absolute;
+	display: block;
+	height: 50px;
+	width: 60px;
+	top: 50%;
+	left: 50%;
+	margin-top: -25px;
+	margin-left: -30px;
+	text-align: center;
 }
 
 header .left {
@@ -342,11 +403,21 @@ header .right {
 
 .content {
 	margin-top: 45px;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	position: relative;
+}
+
+.page-container .page {
+	position: absolute;
+	left: 0;
 }
 
 #status-bar {
 	background: #fff;
 	padding: 10px;
+	position: relative;
 }
 
 #status-bar.fixed {
@@ -645,4 +716,115 @@ header .right {
 .media-comments .edit-dropdown li {
 	font-size: 13px;
 	padding: 5px 15px;
+}
+
+/* Profile Page */
+#profile-content-header {
+	
+}
+
+#profile-header {
+	border: 0;
+	background: #fff;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+
+#profile-cover {
+	width: 100%;
+	height: 155px;
+}
+
+#profile-cover .image {
+    overflow: hidden;
+    position: relative;
+    height: 155px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#profile-cover .image::after {
+    position: absolute;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "";
+    z-index: 2;
+    pointer-events: none;
+    background-image: -webkit-linear-gradient(transparent, black);
+    background-image: linear-gradient(transparent, black);
+    opacity: .7;
+}
+
+#profile-body {
+	height: 35px;
+	position: relative;
+}
+
+#profile-avatar-wrapper {
+    height: 90px;
+    width: 90px;
+    top: -70px;
+    left: 10px;
+    z-index: 11;
+	position: absolute;
+}
+
+#profile-avatar {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+	border: 3px solid #fff;
+	overflow: hidden;
+	z-index: 10;
+}
+
+#profile-avatar img {
+    width: 90px;
+}
+
+#profile-name {
+    font-size: 24px;
+    top: -50px;
+    left: 110px;
+    font-weight: 500;
+	position: absolute;
+	z-index: 10;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+}
+
+#profile-username {
+    font-size: 12px !important;
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+}
+
+#profile-nav {
+    margin: 0 0 0 90px;
+    position: relative;
+}
+
+#profile-nav ul {
+    position: absolute;
+    top: 35px;
+    background: #fff;
+    z-index: 98;
+    border: 1px solid #dbe1e5;
+    right: 5px;
+    display: none;
+}
+
+#mobile-profile-nav {
+    float: right;
+    width: 30px;
+    padding: 5px 10px;
+    margin: 0 10px 0;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+	cursor: pointer;
 }

@@ -74,15 +74,19 @@
 	//var storage.app_user = 1;
     window.common = common;
 	
-	$( window ).scroll(function() {
+	$(window).resize( function() {
+		$('.screen').page();
+	});
+	
+	$('.content').scroll(function() {
 		//Close search 
 		if(isOpen == true){
 			submitIcon.click();
 			submitIcon.removeClass('open');
 		}
 		
-		var p = $('header').offset().top;
-		//console.log( "scrollTop:" + p );
+		var p = $('.page').offset().top;
+	console.log( "scrollTop:" + p );
 		var top_m = p - 135;
 		//console.log(top_m);
 		if(p > 100) {
@@ -218,7 +222,7 @@
 			displayUserNav();
 		//}, 1500);
 			
-		
+			$('.screen').page();
 		
 	});
 	
@@ -230,28 +234,41 @@
 		var href = $(this).attr('href');
 console.log(href);
 		//does it have a hash, or other vars...
-		
-		//Get content
-//		$.get('profile.html', function (my_var) {
-//			alert(my_var);
-//		});
-		
 		//transitions, left or right ... slide-in-from-right
-		$('.screen').page();
+		//$.get('profile.html', function (content) {
+		//			alert(content);
+		//		});
 		//click
-		$('a').click(function() {
-			//href
-			//var href = $(this).attr('href');
-			var page = 'right';
-			if(href == 'index.html') {
-				var trans = 'slide-in-from-left';
+		
+		loading('show');
+		//href
+		//var href = $(this).attr('href');
+		var page = 'right';
+		if(href.match('index.html')) {
+			var trans = 'slide-in-from-left';
+		}
+		else {
+			//Need to populate some pages, do some house keeping
+			if(href.match('profile.html')) {
+				var user_id = getParameterByName('user', href);
+				var user_slug = getParameterByName('user_slug', href);
+console.log('USER: ' + user_id + ' - Sluf: ' + user_slug);
+				//Get user profile
+				buildProfile(user_id, user_slug, function(html){
+				  // here you use the output
+				  //console.log('html 2 : ' + html );
+					$('*[data-jquery-page-name="' + page + '"]').html(html);
+					loading('hide');
+				});
+				//var html = buildProfile(user_id, user_slug);
+//console.log('html : ' + html );
+				
 			}
-			else {
-				var trans = 'slide-in-from-right';
-			}
-			
-			$('.screen').page.transition(page, trans);
-		});
+			var trans = 'slide-in-from-right';
+		}
+		
+		$('.screen').page.transition(page, trans);
+
 		//});
 		//$(".screen").page().transition("11", "none");
 		//$(".remove-button").click(function () {
@@ -275,6 +292,67 @@ console.log(href);
             }
         });
 		*/
+	});
+	
+	
+	$(document).on('click', '.postStatusBtn', function() {
+		var user = 1;
+		var status = $('#statusFrm input[name="status"]').val();
+		//console.log("STATUS: " + status);
+		$('.divOverlay').remove();
+		$('.text-danger').remove();
+		if(status === '') {
+			$('#statusFrm').after('<div class="text-danger">Please enter a message</div>');
+			return false;
+		}
+		//$(body).prepend('<div class="pageOverlay"></div>')
+		$('#status-input').prepend('<div class="divOverlay white"><div class="loading"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div></div>');
+		var formData = new FormData();
+		var myform = $('#statusFrm');
+		var idata = myform.serializeArray();
+		$.each(idata,function(key,input){
+			formData.append(input.name,input.value);
+		});
+		formData.append('action', 'post_status');
+		formData.append('post_user_id', user);
+		$('.status_pic').each(function( index ) {
+			console.log("INDEX: " + index);
+			formData.append('status_pic[' + index + ']', $('#status_pic_' + index)[0].files[0]);
+		});
+		$.ajax({
+  			type: 'POST',
+  			url: common.serviceURL + '?format=json&method=post&action=post_status',
+  			data: formData,
+            contentType: false,
+            processData: false,
+			dataType: "html",
+		})
+  		.done(function( data ) {
+    		console.log( "Data Saved: " + data );
+			var obj = $.parseJSON(data);
+			$('#status-panel').find('.divOverlay').remove();
+			if(obj.resp === 'success') {
+				$('#statusFrm input[name="status"]').val('');
+				$('#statusPicPreview').html('');
+				$('#statusFrm .preview_url').remove();
+				$('#statusFrm .text-danger').remove();
+				$('#statusFrm iframe').remove();
+				//$('#statusFrm textarea[name="status"]').before('<div class="alert alert-success">' + obj.msg + '</div>');
+				if(obj.html !== '') {					
+					$('#first_post_marker').after('<div id="lt">' + obj.html + '</div>');
+					$('#lt').hide().fadeIn();
+					$('.no-content-mssg').remove();
+				}
+				$('body').prepend('<div class="popup-alert">' + obj.msg + '</div>');
+				setTimeout(function(){ 
+					$('.popup-alert').fadeOut(300, function() { $(this).remove(); });
+				}, 3000);
+			}
+			else {
+				$('#statusFrm').before('<div class="alert alert-danger">' + obj.msg + '</div>');
+			}
+			$('.divOverlay').remove();
+		});
 	});
 	
 	/*
@@ -308,11 +386,16 @@ console.log(href);
 		request.done(function(data) { 
 			//console.log("home DATA: " + data);
 			//alert("home DATA: " + data);
+			//console.log("G");
 			var obj = $.parseJSON(data);
 			if(obj.code === 1) {
 				$('.home-content').html(obj.html);
 				loading('hide');
 				//return html;
+			}
+			else {
+				loading('hide');
+				
 			}
 		});
 		request.fail(function(jqXHR, textStatus, thrownError) {			
@@ -350,6 +433,40 @@ console.log(href);
 		request.fail(function(jqXHR, textStatus, thrownError) {			
 			console.log("User Details Error: " + textStatus + ' - ' + thrownError);
 		});
+	}
+	
+	function buildProfile(user_id, user_slug, callback) {
+		//var user_id = 96;
+		//var user_slug = null;
+		//console.log(user_id + ' - ' + user_slug);
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'get', action : 'build_profile', user_id : user_id, user_slug : user_slug}),
+			type: "GET",
+			dataType: "html",
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			//console.log("BUILD PROFILE DATA: " + data);
+			var obj = $.parseJSON(data);
+			if(obj.resp === 'success') {
+				if(obj.html != '') {
+					var html = obj.html;
+				}	
+				else {
+					var html = '';
+				}	
+			}
+			console.log("HTML HERE: " + html);
+			//return html;
+			callback(html);
+		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("BUILD PROFILE Error: " + textStatus + ' - ' + thrownError);
+		});
+		
 	}
 	
 	function setRegistrationId() {
@@ -399,11 +516,26 @@ console.log(href);
 		}
 	}
 	
+	function getParameterByName(name, url) {
+		if (!url) { url = window.location.href; }
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			results = regex.exec(url);
+		if (!results) { return null; }
+		if (!results[2]) { return ''; }
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+	
+	
+	
 	//Begin pickup...
 	$.fn.page = function() {
-		console.log(this.selector);
+console.log(this.selector);
 		var $this = $(this.selector);
-		$this.addClass('page-container');
+		$this.each(function( index ) {
+			$(this).addClass('page-container');
+		});
+		
 		//Resize page...
 		var sw = $('.device').width();
 		var sl = 0;
@@ -411,7 +543,7 @@ console.log(href);
 			$(this).css('width', sw);
 			$(this).css('left', sl);
 			sl = sl + sw;
-			//console.log( index + ": " + $( this ).text() );
+//console.log( index + ": " + $( this ).text() );
 		});
 		
 		var transition = function (event) {
@@ -445,3 +577,7 @@ console.log(href);
 	};
 	
 }());
+
+//(function ( $ ) {
+	
+//}( jQuery ));

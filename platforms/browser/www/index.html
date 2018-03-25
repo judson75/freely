@@ -49,17 +49,23 @@
 		<div class="page" data-jquery-page-name="index">
 			<div class="" id="status-bar">
 				<div id="status-input">
-					<input type="text" name="status" class="" placeholder="Share Your Status"> 
-					<button class="" type="button">POST</button>
-					<!--<button class="" style="padding: 5px 6px;"><i class="flaticon-camera-retro"></i></button>
-					-->
+					<form id="statusFrm">
+						<input name="posted_url" value="" type="hidden">
+						<input type="text" name="status" class="" placeholder="Share Your Status" value=""> 
+						<button class="postStatusBtn" type="button">POST</button>
+						<div>
+							<span class="postPhoto"><i class="fa fa-camera-retro"></i></span>
+							<div id="statusPicPreview"></div>
+						</div>
+						<!--<button class="" style="padding: 5px 6px;"><i class="flaticon-camera-retro"></i></button>
+						-->
+					</form>
 				</div>
 			</div>
+			<div id="first_post_marker"></div>
 			<div class="home-content"></div>
 		</div>
-		<div class="page" data-jquery-page-name="right">
-			RIGHT
-		</div>
+		<div class="page" data-jquery-page-name="right"></div>
 	</section>
 </div>
 <script type="text/javascript" src="cordova.js"></script>
