@@ -175,7 +175,7 @@
 		alert(common.storage.getItem("app_user"));
 		alert(document.location.href.match(/[^\/]+$/)[0]);
 		var user = common.storage.getItem("app_user");
-		if(user === null && document.location.href.match(/[^\/]+$/)[0] !== 'login.html') {
+		if(user === null) {
 			$('#global-header').hide();
 			loadLoginScreen();
 			return false;
