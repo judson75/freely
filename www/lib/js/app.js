@@ -12,8 +12,6 @@
 			document.addEventListener('deviceready', this.onDeviceReady, false);
 		},
 		onDeviceReady: function() {
-			console.log('Received Device Ready Event');
-			console.log('calling setup push');
 			common.setupPush();
 			displayHomePage();
 		},
@@ -31,7 +29,7 @@
 				},
 				"windows": {}
 			});
-			console.log('after init');
+			//console.log('after init');
 
 			push.on('registration', function(data) {
 				console.log('registration event: ' + data.registrationId);
@@ -180,12 +178,14 @@
 		if(user === null && document.location.href.match(/[^\/]+$/)[0] !== 'login.html') {
 			$('#global-header').hide();
 			loadLoginScreen();
+			return false;
 		}
 		else {
 			$('#global-header').show();
 			loadHomeScreen();
 			loadUserNav();
 			loadUserAlerts();
+			return true;
 		}
 	}
 	
