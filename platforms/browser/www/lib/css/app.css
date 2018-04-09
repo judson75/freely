@@ -236,7 +236,7 @@ input[type=checkbox]:checked + label:before {
 
 /*Login */
 #loginFrm {
-	
+	margin-top: -20px;
 }
 
 #loginFrm .logo {
@@ -261,7 +261,7 @@ input[type=checkbox]:checked + label:before {
 
 /* Register */
 #registerFrm {
-	
+	margin-top: -20px;
 }
 
 #registerFrm .logo {

@@ -12,6 +12,7 @@
 			document.addEventListener('deviceready', this.onDeviceReady, false);
 		},
 		onDeviceReady: function() {
+alert("HERE");
 			common.setupPush();
 			displayHomePage();
 		},
@@ -63,7 +64,21 @@
 	/* Document Ready -- Should Mimic DeviceReady */
 	$(document).ready( function() {
 		//common.storage.removeItem("app_user");
-		displayHomePage();
+		window.isphone = false;
+	    if(document.URL.indexOf("http://") === -1 
+	        && document.URL.indexOf("https://") === -1
+	        && document.URL.indexOf("xampp") === -1
+	        && document.URL.indexOf("phonegap") === -1
+		) {
+	        window.isphone = true;
+	    }
+		//alert(window.isphone);
+	    if(window.isphone !== true) {
+			displayHomePage();
+		}
+		else {
+		
+		}
 	});
 	
 	/* Search Box -- Top Nav */
@@ -172,8 +187,8 @@
 	
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
-		alert(common.storage.getItem("app_user"));
-		alert(document.location.href.match(/[^\/]+$/)[0]);
+alert(common.storage.getItem("app_user"));
+//alert(document.location.href.match(/[^\/]+$/)[0]);
 		var user = common.storage.getItem("app_user");
 		if(user === null) {
 			$('#global-header').hide();

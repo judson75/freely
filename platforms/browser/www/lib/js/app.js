@@ -12,10 +12,8 @@
 			document.addEventListener('deviceready', this.onDeviceReady, false);
 		},
 		onDeviceReady: function() {
-			console.log('Received Device Ready Event');
-			console.log('calling setup push');
+alert("HERE");
 			common.setupPush();
-			removeSplash();
 			displayHomePage();
 		},
 		setupPush: function() {
@@ -32,7 +30,7 @@
 				},
 				"windows": {}
 			});
-			console.log('after init');
+			//console.log('after init');
 
 			push.on('registration', function(data) {
 				console.log('registration event: ' + data.registrationId);
@@ -66,7 +64,21 @@
 	/* Document Ready -- Should Mimic DeviceReady */
 	$(document).ready( function() {
 		//common.storage.removeItem("app_user");
-		displayHomePage();
+		window.isphone = false;
+	    if(document.URL.indexOf("http://") === -1 
+	        && document.URL.indexOf("https://") === -1
+	        && document.URL.indexOf("xampp") === -1
+	        && document.URL.indexOf("phonegap") === -1
+		) {
+	        window.isphone = true;
+	    }
+		//alert(window.isphone);
+	    if(window.isphone !== true) {
+			displayHomePage();
+		}
+		else {
+		
+		}
 	});
 	
 	/* Search Box -- Top Nav */
@@ -175,23 +187,26 @@
 	
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
-		//alert(common.storage.getItem("app_user"));
+alert(common.storage.getItem("app_user"));
+//alert(document.location.href.match(/[^\/]+$/)[0]);
 		var user = common.storage.getItem("app_user");
 		if(user === null) {
 			$('#global-header').hide();
 			loadLoginScreen();
+			return false;
 		}
 		else {
 			$('#global-header').show();
 			loadHomeScreen();
 			loadUserNav();
 			loadUserAlerts();
+			return true;
 		}
 	}
 	
 	/* Load Login Screen */
 	function loadLoginScreen() {
-		$.mobile.navigate("index.html", {transition: "slide"});
+		$.mobile.navigate("login.html", {transition: "slide"});
 	}
 	
 	/* Load Home Screen */
@@ -231,7 +246,7 @@
 		request.fail(function(jqXHR, textStatus, thrownError) {			
 			console.log("home Error: " + textStatus + ' - ' + thrownError + ' - ' + JSON.stringify(jqXHR));
 			alert("No");
-			loading('hide');
+			$.mobile.loading('hide');
 		});
 	}
 	
