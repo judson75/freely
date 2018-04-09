@@ -231,7 +231,7 @@
 		request.fail(function(jqXHR, textStatus, thrownError) {			
 			console.log("home Error: " + textStatus + ' - ' + thrownError + ' - ' + JSON.stringify(jqXHR));
 			alert("No");
-			loading('hide');
+			$.mobile.loading('hide');
 		});
 	}
 	
