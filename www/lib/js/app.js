@@ -15,7 +15,6 @@
 			console.log('Received Device Ready Event');
 			console.log('calling setup push');
 			common.setupPush();
-			removeSplash();
 			displayHomePage();
 		},
 		setupPush: function() {
@@ -175,7 +174,7 @@
 	
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
-		//alert(common.storage.getItem("app_user"));
+		alert(common.storage.getItem("app_user"));
 		var user = common.storage.getItem("app_user");
 		if(user === null) {
 			$('#global-header').hide();
@@ -191,7 +190,7 @@
 	
 	/* Load Login Screen */
 	function loadLoginScreen() {
-		$.mobile.navigate("index.html", {transition: "slide"});
+		$.mobile.navigate("login.html", {transition: "slide"});
 	}
 	
 	/* Load Home Screen */
