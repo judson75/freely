@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <link rel="stylesheet" type="text/css" href="lib/css/font/ropa_sans.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="lib/css/fbphotobox.css">
+    <link rel="stylesheet" href="lib/css/rcrop.min.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="lib/css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/app.css">
+    <title>ProLibertyGroup</title>
+</head>
+
+<body>
+<div data-role="page" id="register">
+	<div role="main" class="ui-content">
+		<form id="registerFrm">
+			<img class="logo" src="lib/img/logo.png"><h1>ProLibertyGroup<br>Sign Up</h1>
+			<div id="registerError"></div>
+			<input type="text" name="first_name" id="txt-first-name" value="" autocomplete="off" data-role="none" placeholder="First Name">
+			<input type="text" name="last_name" id="txt-last-name" value="" autocomplete="off" data-role="none" placeholder="Last Name">
+			<input type="text" name="email" id="txt-email" value="" autocomplete="off" data-role="none" placeholder="Email">
+			<input type="text" name="username" id="txt-username" value="" autocomplete="off" data-role="none" placeholder="Username">
+			<input type="password" name="password" id="txt-password" value="" autocomplete="off" data-role="none" placeholder="Password">
+			<input type="password" name="password_confirm" id="txt-password-confirm" value="" autocomplete="off" data-role="none" placeholder="Password Again">
+			<!--<a href="#dlg-sign-up-sent" data-rel="popup" data-transition="pop" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>	-->
+			<button type="button" id="btn-submit" class="btn btn-full registerBtn" data-role="none">Register</button>
+			<p class="mc-top-margin-1-5"><a href="login.html" data-transition="slide" data-direction="reverse">Already A Member? Click here to login</a></p>
+		</form>
+	</div>
+</div>
+   
+<script type="text/javascript" src="cordova.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="lib/js/background-blur.min.js"></script>
+<script type="text/javascript" src="lib/js/fbphotobox.js"></script>
+<script type="text/javascript" src="lib/js/rcrop.min.js"></script>
+<script type="text/javascript" src="lib/js/jqm.page.params.js"></script>
+<script type="text/javascript" src="lib/js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="lib/js/app.js"></script>
+</body>
+</html>

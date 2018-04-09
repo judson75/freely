@@ -40,7 +40,7 @@ a {
 	height: 100%;
 }
 
-header {
+.ui-page-theme-a .ui-bar-inherit {
 	background: #4390bc;
 	color: #fff;
 	position: fixed;
@@ -49,10 +49,18 @@ header {
 	z-index: 13;
 	width: 100%;
 	height: 45px;
+	text-shadow: none !important;
+	font-weight: 200 !important;
 }
 
-header a {
+.ui-header a {
 	color: #fff;
+	text-shadow: none !important;
+	font-weight: 200 !important;
+}
+
+.ui-header a:hover {
+	color: #fff !important;
 }
 
 img {
@@ -96,10 +104,52 @@ textarea {
 	text-shadow: none;
 }
 
+.btn, a.btn {
+	background: #4390bc;
+	color: #fff  !important;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 18px;
+	border: 0;
+	cursor: pointer;
+	padding: 12px 18px;
+	border-radius: 20px;
+	margin-top: 3px;
+	line-height: 1.2em;
+	text-align: center  !important;
+	text-shadow: none !important;
+}
+
+.btn-full {
+	width: 100%;
+}
+
 .text-danger {
 	font-size: 12px;
 	color: #FF0000;
-	10px 0 0 10px;
+	margin: 10px 0 0 10px;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    opacity: 0.83;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+	text-shadow: none !important;
+}
+
+.alert.success {
+    background-color: #4CAF50;
+}
+
+.alert.info {
+    background-color: #2196F3;
+}
+
+.alert.warning {
+    background-color: #ff9800;
 }
 
 .page-loading {
@@ -112,6 +162,9 @@ textarea {
 	background: rgba(0,0,0,.3);
 	display: block;
 }
+
+.helper { font-size: 12px; margin: -5px 0 12px 0; }
+.helper.error { color: #C40003; }
 
 .div-loading {
 	position: fixed;
@@ -154,7 +207,88 @@ textarea {
 	text-align: center;
 }
 
-header .left {
+#global-header { display: none; }
+
+/*** custom checkboxes ***/
+
+input[type=checkbox] { 
+	display:none; 
+} 
+
+input[type=checkbox] + label:before {
+	content: " ";
+	display: inline-block;
+	border: 1px solid #999;
+	height: 22px;
+	width: 22px;
+	vertical-align: middle;
+	margin-right: 8px;
+	font-size: 22px;
+	line-height: 1.0em;
+}
+
+
+input[type=checkbox]:checked + label:before { 
+	font-family: FontAwesome;
+	content: "\f00c"; 
+	
+} /* allow space for check mark */
+
+/*Login */
+#loginFrm {
+	
+}
+
+#loginFrm .logo {
+	display: block;
+	margin: 20px auto 0 auto;
+	width: 100px;
+	height: auto;
+	text-align: center;
+}
+
+#loginFrm h1 {
+	text-align: center;
+}
+
+#loginFrm input {
+	font-size: 18px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+/* Register */
+#registerFrm {
+	
+}
+
+#registerFrm .logo {
+	display: block;
+	margin: 20px auto 0 auto;
+	width: 100px;
+	height: auto;
+	text-align: center;
+}
+
+#registerFrm h1 {
+	text-align: center;
+}
+
+#registerFrm input {
+	font-size: 18px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.ui-content {
+	margin-top: 40px;
+}
+
+.ui-header .left {
 	width: 15%;
 	float: left;
 }
@@ -168,7 +302,7 @@ header .left {
 
 }
 
-header .center {
+.ui-header .center {
 	width: 20%;
 	top: 10px;
 	left: 20%;
@@ -177,7 +311,7 @@ header .center {
 }
 
 
-header .right {
+.ui-header .right {
 	width: 55%;
 	float: right;
 	margin: 6px 10px 0 0;
@@ -185,30 +319,30 @@ header .right {
 	font-size: 20px;
 }
 
-	header .right ul {
+	.ui-header .right ul {
 		list-style: none;
 		padding: 0;
 		margin: 0;
 	}
 
-	header .right ul li {
+	.ui-header .right ul li {
 		display: inline-block;
 		vertical-align: top;
 		margin-top: 4px;
 	}
 
-	header .right ul li i {
+	.ui-header .right ul li i {
 		padding: 5px;
 		
 	}
 	
-	header .right ul li.nav-status-btn {
+	.ui-header .right ul li.nav-status-btn {
 		margin-right: -15px;
 		margin-top: -35px;
 		transition: margin 300ms;
 	}
 	
-	header .right ul li.nav-status-btn.open {
+	.ui-header .right ul li.nav-status-btn.open {
 		margin-top: 5px;
 	}
 
@@ -393,13 +527,39 @@ header .right {
 
 #user-alerts ul {
 	list-style: none;
-	padding: 0 0 50px 0;
+	padding: 20px 0 50px 0;
 	margin: 0;
 	overflow-y: auto;
 	height: 100%;
 }
 
+#user-alerts ul li {
+	padding: 10px;
+}
 
+ul li .comment-date {
+	font-size: 12px;
+	color: #666;
+}
+
+.nav-alerts-button {
+	position: relative;
+}
+
+.user-alert-count {
+	background: #FF0000;
+	color: #fff;
+	font-size: 10px;
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	height: 17px;
+	width: 17px;
+	border-radius: 50%;
+	text-align: center;
+	font-weight: bold;
+	line-height: 17px;
+}
 
 .content {
 	margin-top: 45px;
@@ -416,8 +576,10 @@ header .right {
 
 #status-bar {
 	background: #fff;
-	padding: 10px;
+	padding: 10px 15px;
 	position: relative;
+	margin: -12px 0 0 -5%;
+	width: 110%;
 }
 
 #status-bar.fixed {
@@ -445,7 +607,6 @@ header .right {
 	font-size: 18px;
 	width: calc(100% - 70px);
 	display: inline-block;
-	padding: 3px;
 	color: #666;
 	margin-top: 3px;
 	vertical-align: middle;
@@ -466,10 +627,33 @@ header .right {
 	line-height: 1.2em;
 }
 
+#status-extra {
+	margin: 0;
+	display: none;
+}
+
+#status-photo {
+	display: none;
+}
+
+.postPhoto {
+	padding: 5px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#status-extra i {
+	color: #4390bc;
+	font-size: 24px;
+	display: block;
+	vertical-align: middle;
+}
+
 .panel {
 	background: #fff;
 	padding: 0px;
-	margin: 10px 0;
+	margin: 10px 0 0 -5%;
+	width: 110%;
 }
 
 .media-top {
@@ -576,6 +760,10 @@ header .right {
 	float: left;
 	margin-right: 1%;
 	margin-top: 1%;
+}
+
+.media-img-half:nth-child(2) {
+    margin-right: 0;
 }
 
 .media-img-half:nth-child(3) {

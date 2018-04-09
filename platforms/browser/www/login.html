@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <link rel="stylesheet" type="text/css" href="lib/css/font/ropa_sans.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="lib/css/fbphotobox.css">
+    <link rel="stylesheet" href="lib/css/rcrop.min.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="lib/css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/flaticon.css" />
+    <link rel="stylesheet" type="text/css" href="lib/css/app.css" />
+    <title>ProLibertyGroup</title>
+</head>
+
+<body>
+<div data-role="page" id="login">
+	<div role="main" class="ui-content">
+		<form id="loginFrm">
+			<img class="logo" src="lib/img/logo.png"><h1>ProLibertyGroup</h1>
+			<div id="loginError"></div>
+			<input type="text" name="email" id="txt-email" value="" placeholder="Email" data-role="none">
+			<input type="password" name="password" id="txt-password" value="" placeholder="Password" data-role="none">
+			<fieldset data-role="none">
+			<input type="checkbox" name="remember_me" id="chck-rememberme" checked="" data-role="none">
+			<label for="chck-rememberme">Remember me</label>
+			</fieldset>
+			<button type="button" id="btn-submit" class="btn btn-full loginBtn" data-role="none">Login</button>
+			<p class="mc-top-margin-1-5"><a href="begin-password-reset.html">Can't access your account?</a></p>
+		</form>
+		
+		<h3>Not A Member?</h3>
+		<a class="btn btn-full" href="register.html" data-transition="slide" data-role="none">Register</a>
+	</div>
+</div>
+   
+<script type="text/javascript" src="cordova.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="lib/js/background-blur.min.js"></script>
+<script type="text/javascript" src="lib/js/fbphotobox.js"></script>
+<script type="text/javascript" src="lib/js/rcrop.min.js"></script>
+<script type="text/javascript" src="lib/js/jqm.page.params.js"></script>
+<script type="text/javascript" src="lib/js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="lib/js/app.js"></script>
+</body>
+</html>

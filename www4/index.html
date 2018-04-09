@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/app.css" />
+    <link rel="stylesheet" type="text/css" href="lib/css/font/flaticon.css" />
+    <title>ProLibertyGroup</title>
+</head>
+<body>
+<div id="app-wrapper" class="device">
+	<header>
+		<nav class="left">
+			<div class="nav-avatar"><a href="#"><img src="http://cbhllc.net/lib/php/timthumb.php?src=lib/images/user_images/5a9a0836961c8.jpg&amp;h=40&amp;w=40&amp;zc=1"></a></div>	
+		</nav>
+		<nav class="center"></nav>
+		<nav class="right">
+			<ul>
+				<li class="nav-status-btn"><i class="flaticon-pencil"></i></li>
+				<li>
+					<form class="searchbox">
+						<input type="search" placeholder="Search......" name="search" class="searchbox-input" onkeyup="buttonUp();" required>
+						<button type="button" class="searchbox-submit"><i class="flaticon-magnifying-glass"></i></button>
+					</form>
+					
+					<span class="searchbox-icon"><i class="flaticon-magnifying-glass"></i></span>
+					
+				</li>
+				<li><a href="javascript:Void(0);" class="nav-alerts-button"><i class="flaticon-musical-bell-outline"></i></a></li>
+				<li><a href="javascript:Void(0);" class="nav-menu-button"><i class="flaticon-list-with-dots"></i></a></li>
+			</ul>
+		</nav>
+		<div class="clr"></div>
+	</header>
+	<div id="user-nav">
+		<div id="user-nav-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+	</div>
+	<div id="user-alerts">
+		<div id="user-alerts-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+	</div>
+	<section id="home-page" class="content screen">
+		<div class="page" data-jquery-page-name="index">
+			<div class="" id="status-bar">
+				<div id="status-input">
+					<form id="statusFrm">
+						<input name="posted_url" value="" type="hidden">
+						<input type="text" name="status" class="" placeholder="Share Your Status" value=""> 
+						<button class="postStatusBtn" type="button">POST</button>
+						<div>
+							<span class="postPhoto"><i class="fa fa-camera-retro"></i></span>
+							<div id="statusPicPreview"></div>
+						</div>
+						<!--<button class="" style="padding: 5px 6px;"><i class="flaticon-camera-retro"></i></button>
+						-->
+					</form>
+				</div>
+			</div>
+			<div id="first_post_marker"></div>
+			<div class="home-content"></div>
+		</div>
+		<div class="page" data-jquery-page-name="right"></div>
+	</section>
+</div>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="lib/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="lib/js/app.js"></script>
+<script type="text/javascript">
+// app.initialize();
+</script>
+</body>
+</html>
