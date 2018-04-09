@@ -175,8 +175,9 @@
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
 		alert(common.storage.getItem("app_user"));
+		alert(document.location.href.match(/[^\/]+$/)[0]);
 		var user = common.storage.getItem("app_user");
-		if(user === null) {
+		if(user === null && document.location.href.match(/[^\/]+$/)[0] !== 'login.html') {
 			$('#global-header').hide();
 			loadLoginScreen();
 		}
