@@ -12,7 +12,6 @@
 			document.addEventListener('deviceready', this.onDeviceReady, false);
 		},
 		onDeviceReady: function() {
-alert("HERE");
 			common.setupPush();
 			displayHomePage();
 		},
@@ -63,7 +62,6 @@ alert("HERE");
 	
 	/* Document Ready -- Should Mimic DeviceReady */
 	$(document).ready( function() {
-		//common.storage.removeItem("app_user");
 		window.isphone = false;
 	    if(document.URL.indexOf("http://") === -1 
 	        && document.URL.indexOf("https://") === -1
@@ -74,6 +72,7 @@ alert("HERE");
 	    }
 		//alert(window.isphone);
 	    if(window.isphone !== true) {
+	    	//common.storage.removeItem("app_user");
 			displayHomePage();
 		}
 		else {
@@ -185,9 +184,14 @@ alert("HERE");
 		userLogin();
 	});
 	
+	/* Init of homepage */
+	$(document).on("pageinit", "#home",function(event){
+		//console.log('about to show page...');
+	});
+	
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
-alert(common.storage.getItem("app_user"));
+//alert(common.storage.getItem("app_user"));
 //alert(document.location.href.match(/[^\/]+$/)[0]);
 		var user = common.storage.getItem("app_user");
 		if(user === null) {
@@ -240,7 +244,6 @@ alert(common.storage.getItem("app_user"));
 			}
 			else {
 				$.mobile.loading('hide');
-				
 			}
 		});
 		request.fail(function(jqXHR, textStatus, thrownError) {			
@@ -366,7 +369,7 @@ alert(common.storage.getItem("app_user"));
 			dataType: "html",
 			url: common.serviceURL + '?format=json&method=post&action=register',
 			beforeSend: function() {
-
+				$.mobile.loading('show');
 			}
 		});
 		request.done(function(data) { 
@@ -376,13 +379,16 @@ alert(common.storage.getItem("app_user"));
 				//Set User and forward to homepage
 				common.storage.setItem('app_user', obj.data.id);
 				$.mobile.navigate("index.html", {transition: "slide", direction : "reverse"});
+				loadHomeScreen();
 			}
 			else {
 				$('#registerError').html('<div class="alert alert-danger">' + obj.data + '</div>');
+				$.mobile.loading('hide');
 			}
 		});
 		request.fail(function(jqXHR, textStatus, thrownError) {			
 			console.log("Register Error: " + textStatus + ' - ' + thrownError);
+			$.mobile.loading('hide');
 		});
 	}
 	
@@ -422,7 +428,7 @@ alert(common.storage.getItem("app_user"));
 			dataType: "html",
 			url: common.serviceURL + '?format=json&method=post&action=register',
 			beforeSend: function() {
-
+				$.mobile.loading('show');
 			}
 		});
 		request.done(function(data) { 
@@ -431,13 +437,16 @@ alert(common.storage.getItem("app_user"));
 			if(obj.resp === 'success') {
 				common.storage.setItem('app_user', obj.data.id);
 				$.mobile.navigate("index.html", {transition: "slide", direction : "reverse"});
+				loadHomeScreen();
 			}
 			else {
 				$('#loginError').html('<div class="alert alert-danger">' + obj.data + '</div>');
+				$.mobile.loading('hide');
 			}
 		});
 		request.fail(function(jqXHR, textStatus, thrownError) {			
 			console.log("Login Error: " + textStatus + ' - ' + thrownError);
+			$.mobile.loading('hide');
 		});
 	}
 	
