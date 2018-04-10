@@ -201,8 +201,6 @@
 		}
 		else {
 			loadHomeScreen();
-			loadUserNav();
-			loadUserAlerts();
 			return true;
 		}
 	}
@@ -241,6 +239,8 @@
 			if(obj.code === 1) {
 				$('#home-content').html(obj.html);
 				$.mobile.loading('hide');
+				loadUserNav();
+				loadUserAlerts();
 			}
 			else {
 				$.mobile.loading('hide');
