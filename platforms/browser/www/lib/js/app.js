@@ -66,7 +66,6 @@
 	    if(document.URL.indexOf("http://") === -1 
 	        && document.URL.indexOf("https://") === -1
 	        && document.URL.indexOf("xampp") === -1
-	        && document.URL.indexOf("phonegap") === -1
 		) {
 	        window.isphone = true;
 	    }
@@ -188,6 +187,13 @@
 	$(document).on("pageinit", "#home",function(event){
 		//console.log('about to show page...');
 	});
+	
+	/* INit of Profile */
+	$(document).on("pageinit", "#profile",function(event){
+		alert("Get the profile");
+	});
+	
+	
 	
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
