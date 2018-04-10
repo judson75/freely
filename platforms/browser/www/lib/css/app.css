@@ -209,6 +209,43 @@ textarea {
 	text-align: center;
 }
 
+.pp_pic {
+	display: inline-block;
+	position: relative;
+	border: 1px solid #dbe1e5;
+	padding: 2px;
+	vertical-align: top;
+	width: 48%;
+	height: auto;
+	margin: 0 2% 10px 0;
+}
+
+.pp_pic:nth-child(2) {
+	margin-right: 0;
+}
+
+.del-pp-pic {
+	background: red;
+	color: #fff;
+	border-radius: 50%;
+	position: absolute;
+	z-index: 9;
+	height: 24px;
+	width: 24px;
+	text-align: center;
+	top: -10px;
+	right: -10px;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 1.2em;
+}
+
+.del-pp-pic i {
+	color: #fff !important;
+	text-shadow: none !important;
+	font-size: 22px;
+}
+
 /*#global-header { display: none; }*/
 
 /*** custom checkboxes ***/

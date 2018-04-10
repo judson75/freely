@@ -125,14 +125,28 @@
 	/* Status Photo */
 	var pic_count = 0;
 	$(document).on('click', '.postPhoto', function(){
-		//$('#status-photo').click();
-		var id = pic_count;
-		$('input[name="status"]').after('<input type="file" class="status_pic" name="status_pic[]" id="status_pic_' + id + '" style="display: none;" accept="image/*">');
-		$('#status_pic_' + id).click();
-		$('#status_pic_' + id).on('change', function() {
-			handleStatusPics(id);
+		navigator.camera.getPicture(
+		function(imageURI) {
+			$('#statusFrm').append('<input type="text" name="status_pic_' + pic_count + '" id="status_pic_' + pic_count + '" value="' + imageURI + '">');
+			$('#statusPicPreview').append('<div class="pp_pic" id="pp_pic_' + pic_count + '"><img src="' + imageURI + '"><div class="del-pp-pic" data-id="' + pic_count + '"><i class="fa fa-times"></i></div></div>');
+			pic_count++;
+		},
+		function(message) {
+			alert('get picture failed');
+		}, {
+		 	quality: 100,
+			destinationType: navigator.camera.DestinationType.NATIVE_URI,
+		 	//destinationType: navigator.camera.DestinationType.FILE_URI,
+			//destinationType: navigator.camera.DestinationType.DATA_URL,
+		 	sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
 		});
-		pic_count++;
+	});
+	
+	$(document).on('click', '.del-pp-pic', function() {
+		var id = $(this).attr('data-id');
+		console.log(id);
+		$('#pp_pic_' + id).remove();
+		$('#status_pic_' + id).remove();
 	});
 	
 	/* Post Status Click */
@@ -538,10 +552,14 @@
 	function postStatus() {
 		var user = common.storage.getItem("app_user");
 		var status = $('#statusFrm input[name="status"]').val();
+		//Check for images...
+		//var arr = $("[name^=status_pic_]");
+		var arr = $("input[name^='status_pic_']");
+		//alert(arr.length);
 		//console.log("STATUS: " + status);
 		$('.divOverlay').remove();
 		$('.text-danger').remove();
-		if(status === '') {
+		if(status === '' && arr.length < 1) {
 			$('#statusFrm').after('<div class="text-danger">Please enter a message</div>');
 			return false;
 		}
@@ -556,10 +574,10 @@
 		});
 		formData.append('action', 'post_status');
 		formData.append('post_user_id', user);
-		$('.status_pic').each(function( index ) {
-			console.log("INDEX: " + index);
-			formData.append('status_pic[' + index + ']', $('#status_pic_' + index)[0].files[0]);
-		});
+		//$('.status_pic').each(function( index ) {
+		//	console.log("INDEX: " + index);
+		//	formData.append('status_pic[' + index + ']', $('#status_pic_' + index)[0].files[0]);
+		//});
 		$.ajax({
   			type: 'POST',
   			url: common.serviceURL + '?format=json&method=post&action=post_status',
@@ -585,6 +603,16 @@
 					$('#lt').hide().fadeIn();
 					$('.no-content-mssg').remove();
 				}
+				//Images
+				var i=0;
+				if(arr.length > 0) {
+					for(i=0;i<arr.length;i++){     
+						alert($('#status_pic_' + i).val());
+						var imgURI = $('#status_pic_' + i).val();
+						uploadPhoto(imgURI, obj.id);
+					}
+				}
+
 				$('body').prepend('<div class="popup-alert">' + obj.msg + '</div>');
 				setTimeout(function(){ 
 					$('.popup-alert').fadeOut(300, function() { $(this).remove(); });
@@ -678,29 +706,24 @@
 		});
 	}
 	
-	window.URL    = window.URL || window.webkitURL;
-	var useBlob   = false && window.URL;
-	
-	function handleStatusPics(id) {		
-		var file = document.getElementById('status_pic_' + id).files[0];
-		//console.log(file);
-		if ( (/\.(png|jpeg|jpg|gif)$/i).test(file.name) ) {
-			//readStatusImage( file, id ); 
-			var reader = new FileReader();
-			reader.addEventListener('load', function () {
-				//$('#statusPicPreview').html('');
-				var image  = new Image();
-				image.src = useBlob ? window.URL.createObjectURL(file) : reader.result;
-				//console.log(image.src);
-				$('#statusPicPreview').append('<div class="pp_pic" id="pp_pic_' + id + '"><img src="' + image.src + '"><div class="del-pp-pic" data-id="' + id + '"><i class="fa fa-times"></i></div></div>');
-			});
+	function uploadPhoto(imageURI, post_id) {
+		var options = new FileUploadOptions();
+		options.fileKey = "file";
+		options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+		options.mimeType = "image/jpeg";
+		console.log(options.fileName);
+		var params = new Object();
+		params.post_id = post_id;
+		options.params = params;
+		options.chunkedMode = false;
 
-			reader.readAsDataURL(file);
-			
-		} else {
-			errors += file.name +" Unsupported Image extension\n";  
-		}
-	}
+		var ft = new FileTransfer();
+		ft.upload(imageURI, common.siteURL + '/lib/inc/upload.inc.php', function(result){
+			console.log(JSON.stringify(result));
+		}, function(error){
+			console.log(JSON.stringify(error));
+		}, options);
+ }
 	
 	function getParameterByName(name, url) {
 		if (!url) { url = window.location.href; }
