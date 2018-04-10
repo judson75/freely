@@ -200,7 +200,6 @@
 			return false;
 		}
 		else {
-			$('#global-header').show();
 			loadHomeScreen();
 			loadUserNav();
 			loadUserAlerts();
@@ -216,6 +215,7 @@
 	/* Load Home Screen */
 	
 	function loadHomeScreen() {
+		$('#global-header').show();
 		var user = common.storage.getItem("app_user");
 		var registrationId = common.storage.getItem("registrationId");
 		if(registrationId !== '' && registrationId !== null) {
@@ -270,7 +270,7 @@
 			var obj = $.parseJSON(data);
 			$('#user-nav').find('ul').remove();
 			if(obj.resp === 'success') {
-				//$('.nav-avatar').html('<a href="#profile_menu"><img src="' + common.siteURL + '/lib/php/timthumb.php?src=' + common.siteURL + '/' + obj.user.avatar + '&amp;h=45&amp;w=45&amp;zc=1"></a>');
+				$('.nav-avatar').html('<a href="index.html"><img src="' + common.siteURL + '/lib/php/timthumb.php?src=' + common.siteURL + '/' + obj.user.avatar + '&amp;h=45&amp;w=45&amp;zc=1"></a>');
 				$('#user-nav').append(obj.html);
 			}
 			else {
