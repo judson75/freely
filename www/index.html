@@ -22,35 +22,38 @@
 <body>
 <!--<div id="splash"><div id="sp_inner"><img src="lib/img/logo.png"><h1>ProLibertyGroup</h1></div></div>-->
 <div data-role="page" id="home">
-	<div data-role="header" id="global-header">
-		<nav class="left">
-			<div class="nav-avatar"></div>	
-		</nav>
-		<nav class="center"></nav>
-		<nav class="right">
-			<ul>
-				<li class="nav-status-btn"><i class="flaticon-pencil"></i></li>
-				<li>
-					<form class="searchbox">
-						<input type="search" placeholder="Search......" name="search" class="searchbox-input" onkeyup="buttonUp();" required data-role="none">
-						<button type="button" class="searchbox-submit" data-role="none"><i class="flaticon-magnifying-glass"></i></button>
-					</form>
-					
-					<span class="searchbox-icon"><i class="flaticon-magnifying-glass"></i></span>
-					
-				</li>
-				<li><a href="javascript:Void(0);" class="nav-alerts-button"><i class="flaticon-musical-bell-outline"></i></a></li>
-				<li><a href="javascript:Void(0);" class="nav-menu-button"><i class="flaticon-list-with-dots"></i></a></li>
-			</ul>
-		</nav>
-		<div class="clr"></div>
+	<div data-role="header" id="global-header" data-position="fixed" data-id="global-header">
+		<div data-role="">
+			<nav class="left">
+				<div class="nav-avatar"></div>	
+			</nav>
+			<nav class="center"></nav>
+			<nav class="right">
+				<ul data-role="none">
+					<li class="nav-status-btn" data-role="none"><i class="flaticon-pencil"></i></li>
+					<li data-role="none">
+						<form class="searchbox">
+							<input type="search" placeholder="Search......" name="search" class="searchbox-input" onkeyup="buttonUp();" required data-role="none">
+							<button type="button" class="searchbox-submit" data-role="none"><i class="flaticon-magnifying-glass"></i></button>
+						</form>
+
+						<span class="searchbox-icon"><i class="flaticon-magnifying-glass"></i></span>
+
+					</li>
+					<li data-role="none"><span class="nav-alerts-button"><i class="flaticon-musical-bell-outline"></i></span></li>
+					<li data-role="none"><span class="nav-menu-button"><i class="flaticon-list-with-dots"></i></span></li>
+				</ul>
+			</nav>
+			<div class="clr"></div>
+			<div id="user-nav">
+				<div id="user-nav-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+			</div>
+			<div id="user-alerts">
+				<div id="user-alerts-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+			</div>
+		</div>
 	</div><!-- /header -->
-	<div id="user-nav">
-		<div id="user-nav-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
-	</div>
-	<div id="user-alerts">
-		<div id="user-alerts-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
-	</div>
+	
 	
 	<!-- Profile menu -->
 	<div id="profile_menu" data-role="panel" data-position="right" data-display="overlay"></div>

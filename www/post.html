@@ -6,109 +6,56 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-    <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' * data: ;" />
+    <link rel="stylesheet" type="text/css" href="lib/css/font/ropa_sans.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/font-awesome.min.css">
     
     <link rel="stylesheet" href="lib/css/fbphotobox.css">
     <link rel="stylesheet" href="lib/css/rcrop.min.css" media="screen" type="text/css">
     
     <link rel="stylesheet" href="lib/css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/flaticon.css" />
     <link rel="stylesheet" type="text/css" href="lib/css/app.css" />
     <title>ProLibertyGroup</title>
 </head>
 
 <body>
-<div data-role="page" id="post-page">
-	<div data-role="header">
-		<div class="logo"><a href="index.html" data-transition="slide" data-direction="reverse">ProLibertyGroup</a></div>
-		<!--<h1>Page Title</h1>-->
-		<div class="nav-avatar"></div>
-	</div><!-- /header -->
-	
-	<!-- Profile menu -->
-	<div id="profile_menu" data-role="panel" data-position="right" data-display="overlay"></div>
-	<!-- End of Profile menu -->
+<div data-role="page" id="post">
+	<div data-role="header" id="global-header" data-position="fixed" data-id="global-header">
+		<div data-role="">
+			<nav class="left">
+				<div class="nav-avatar"></div>	
+			</nav>
+			<nav class="center"></nav>
+			<nav class="right">
+				<ul>
+					<li class="nav-status-btn"><i class="flaticon-pencil"></i></li>
+					<li>
+						<form class="searchbox">
+							<input type="search" placeholder="Search......" name="search" class="searchbox-input" onkeyup="buttonUp();" required data-role="none">
+							<button type="button" class="searchbox-submit" data-role="none"><i class="flaticon-magnifying-glass"></i></button>
+						</form>
 
-	<div role="main" class="ui-content">
-		<div id="post-block"></div>
-		
-		<div class="panel panel-default clearfix-xs" id="post-panel">
-			<div id="post-page-content">
-				<div class="timeline-block">
-					<div class="panel panel-default" id="panel-body-144">
-						<div class="panel-heading">
-							<div class="media">
-								<div class="media-left">
-									<a href="http://cbhllc.net/profile/judsonc75"><img src="http://cbhllc.net/lib/php/timthumb.php?src=http://cbhllc.net/lib/images/user_images/5a43d6d1dba2f.jpg&h=50&w=50&zc=1" class="media-object"></a>
-								</div>
-								<div class="media-body">
-																		<div class="pull-right dropdown" data-show-hover="li" style="">
-										<span class="text-muted showPostMenu"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
-										<ul class="dropdown-menu" role="menu" data-id="144">
-											<li class="editLink" data-id="144" data-user="1">Edit</li>
-											<li class="deleteLink" data-id="144" data-user="1">Delete</li>
-										</ul>
-									</div>
-																		<a href="http://cbhllc.net/profile/judsonc75">Judson Cooper</a>
-									 &nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i>&nbsp; <a href="http://cbhllc.net/profile/gary">Gary Cooper</a>								
-									<div class="comment-date">Yesterday</div>
-								</div>
-								<div class="clr"></div>
-							</div>
-						</div>
-						<div class="panel-body" id="">
-							<div class="media-post">
-								<div class="media-message" style="font-size: 26px;" id="post-container-144">Here</div></div>							</div>
-							<div class="media-actions">
-								<div class="wholiked"><a href="http://cbhllc.net/profile/judsonc75">You</a> liked this post</div><span class="media-action-btn likePostBtn" data-id="144" data-user="1" id="like-btn-144"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Liked (1)</span><span class="media-action-btn dislikePostBtn" data-id="144" data-user="1" id="dislike-btn-144"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> Dislike (0)</span><span class="media-action-btn commentPostBtn" data-id="144" data-user="1" id="comment-btn-144" onclick="location.href='http://cbhllc.net/post/144'"><i class="fa fa-comment-o" aria-hidden="true"></i> Comment (1)</span><span class="media-action-btn sharePostBtn" data-id="144" data-user="1" id="share-btn-144"><i class="fa fa-share" aria-hidden="true"></i> Share</span>							</div>
-						</div>
-						<ul class="comments" id="comments-144">
-							<li class="media" id="panel-body-145">
-														<div class="media-left">
-															<a href="http://cbhllc.net/profile/gary"><img src="http://cbhllc.net/lib/php/timthumb.php?src=http://cbhllc.net/lib/images/user_images/20171125_174825.jpg&h=40&w=40&zc=1" class="media-object"></a>
-														</div>
-														<div class="media-body"><a href="http://cbhllc.net/profile/gary" class="comment-author">Gary Cooper</a>
-															<div class="comment-date">23 Hours Ago</div>
-														</div>
-														<div class="clr"></div>
-														<div class="comments-reply" id="post-container-145">Yes</div></li>							<li class="comment-form">
-								<div class="input-group" style="position: relative;">
-									<input class="form-control commentsInput" type="text" id="comment_text_144" placeholder="Leave A Comment" data-role="none">
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-default sendCommentBtn" data-id="144" data-user="1" data-role="none">Send</button>
-									</span>
-									<input type="file" name="comment_pic" class="comment_pic" id="comment_pic_144" data-id="144" accept="image/*" data-role="none">
-									<div class="comment_pic_preview" id="comment_pic_preview_144"></div>
-									<div class="comments-media-buttons">
-										<button type="button" class="btn btn-default uploadCommentImgBtn" data-id="144"><i class="fa fa-camera-retro" aria-hidden="true"></i> Image</button>
-										<button type="button" class="btn btn-danger cancelCommentImgBtn"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
+						<span class="searchbox-icon"><i class="flaticon-magnifying-glass"></i></span>
+
+					</li>
+					<li><a href="javascript:Void(0);" class="nav-alerts-button"><i class="flaticon-musical-bell-outline"></i></a></li>
+					<li><a href="javascript:Void(0);" class="nav-menu-button"><i class="flaticon-list-with-dots"></i></a></li>
+				</ul>
+			</nav>
+			<div class="clr"></div>
+			<div id="user-nav">
+				<div id="user-nav-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
 			</div>
-			
-		</div>	
-	</div><!-- /content -->
-
-	<div data-role="footer">
-		<a href="report_bug.html" data-transition="slide" data-role="none" ><i class="fa fa-bug" aria-hidden="true"></i> Report Bug</a>
-	</div><!-- /footer -->
-	<div data-role="popup" id="popupBox">
-		<div data-role="header" id="popupHeader"></div>
-		<div role="main" class="ui-content" id="popupBody"></div>
-		<div data-role="footer">
-			<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
+			<div id="user-alerts">
+				<div id="user-alerts-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+			</div>
 		</div>
-	</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content" id="post-content"></div><!-- /content -->
 </div>
-
-
-
+   
 <script type="text/javascript" src="cordova.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript" src="lib/js/background-blur.min.js"></script>
@@ -117,8 +64,5 @@
 <script type="text/javascript" src="lib/js/jqm.page.params.js"></script>
 <script type="text/javascript" src="lib/js/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src="lib/js/app.js"></script>
-<script type="text/javascript">
-   // app.initialize();
-</script>
 </body>
 </html>

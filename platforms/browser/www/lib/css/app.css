@@ -42,7 +42,6 @@ a {
 
 .ui-page-theme-a .ui-bar-inherit {
 	background: #4390bc;
-	color: #fff;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -50,16 +49,19 @@ a {
 	width: 100%;
 	height: 48px;
 	text-shadow: none !important;
-	font-weight: 200 !important;
+	border: 0;
+	font-weight: normal;
 }
 
-.ui-header a {
+
+
+.ui-header .right a {
 	color: #fff;
 	text-shadow: none !important;
 	font-weight: 200 !important;
 }
 
-.ui-header a:hover {
+.ui-header .right a:hover {
 	color: #fff !important;
 }
 
@@ -207,7 +209,7 @@ textarea {
 	text-align: center;
 }
 
-#global-header { display: none; }
+/*#global-header { display: none; }*/
 
 /*** custom checkboxes ***/
 
@@ -285,7 +287,7 @@ input[type=checkbox]:checked + label:before {
 }
 
 .ui-content {
-	margin-top: 40px;
+	margin-top: 0px;
 }
 
 .ui-header .left {
@@ -314,9 +316,11 @@ input[type=checkbox]:checked + label:before {
 .ui-header .right {
 	width: 55%;
 	float: right;
-	margin: 6px 10px 0 0;
+	margin: 4px 10px 0 0;
 	text-align: right;
 	font-size: 20px;
+	color: #fff;
+	font-weight: 200 !important;
 }
 
 	.ui-header .right ul {
@@ -412,7 +416,7 @@ input[type=checkbox]:checked + label:before {
 
 .searchbox-icon {
 	width:40px;
-    height:35px;
+    height: 37px;
     display:block;
     position:relative;
     top: -6px;
@@ -449,7 +453,7 @@ input[type=checkbox]:checked + label:before {
 #user-nav {
 	background: #fff;
 	position: fixed;
-	top: 45px;
+	top: 48px;
 	/*left: 0;*/
 	right: -100%;
 	height: 100%;
@@ -517,7 +521,7 @@ input[type=checkbox]:checked + label:before {
 #user-alerts {
 	background: #fff;
 	position: fixed;
-	top: 45px;
+	top: 48px;
 	/*left: 0;*/
 	right: -100%;
 	height: 100%;
@@ -535,6 +539,11 @@ input[type=checkbox]:checked + label:before {
 
 #user-alerts ul li {
 	padding: 10px 20px 10px 10px;
+	background-color: #fff;
+}
+
+#user-alerts ul li.unread {
+    background-color: #f1f7fb;
 }
 
 ul li .comment-date {
@@ -908,7 +917,8 @@ ul li .comment-date {
 
 /* Profile Page */
 #profile-content-header {
-	
+	margin: -16px 0 0 -5%;
+	width: 110%;
 }
 
 #profile-header {
@@ -1015,4 +1025,36 @@ ul li .comment-date {
     text-align: center;
     display: block;
 	cursor: pointer;
+}
+
+#search-content ul {
+	list-style:  none;
+	margin: 0;
+	padding: 0;
+	
+}
+
+.media-left {
+	width: 65px;
+	float: left;
+}
+
+	.media-left img {
+		border-radius: 50%;
+	}
+
+.media-right {
+	width: calc(100% - 65px);
+	float: right;
+}
+
+.media-right  .media-link {
+	font-weight: bold;
+}
+
+.media-right .media-meta {
+	display: block;
+	font-size: 13px;
+	color: #666;
+	margin-top: 5px;
 }

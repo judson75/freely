@@ -63,15 +63,16 @@
 	/* Document Ready -- Should Mimic DeviceReady */
 	$(document).ready( function() {
 		window.isphone = false;
-	    if(document.URL.indexOf("http://") === -1 
-	        && document.URL.indexOf("https://") === -1
-	        && document.URL.indexOf("xampp") === -1
+	    if(document.URL.indexOf("http://") === -1 && 
+		   document.URL.indexOf("https://") === -1 && 
+		   document.URL.indexOf("xampp") === -1 &&
+		   document.URL.indexOf("ProLiberty") === -1
 		) {
 	        window.isphone = true;
 	    }
 		//alert(window.isphone);
 	    if(window.isphone !== true) {
-	    	//common.storage.removeItem("app_user");
+	    	//alert(common.storage.getItem("app_user"));
 			displayHomePage();
 		}
 		else {
@@ -85,7 +86,7 @@
 	var searchBox = $('.searchbox');
 	var isOpen = false;
 	submitIcon.click(function(){
-		if(isOpen == false){
+		if(isOpen === false){
 			searchBox.addClass('searchbox-open');
 			inputBox.focus();
 			isOpen = true;
@@ -122,10 +123,23 @@
 	});
 	
 	/* Status Photo */
+	var pic_count = 0;
 	$(document).on('click', '.postPhoto', function(){
-		$('#status-photo').click();
+		//$('#status-photo').click();
+		var id = pic_count;
+		$('input[name="status"]').after('<input type="file" class="status_pic" name="status_pic[]" id="status_pic_' + id + '" style="display: none;" accept="image/*">');
+		$('#status_pic_' + id).click();
+		$('#status_pic_' + id).on('change', function() {
+			handleStatusPics(id);
+		});
+		pic_count++;
 	});
-
+	
+	/* Post Status Click */
+	$(document).on('click', '.postStatusBtn', function() {
+		postStatus();
+	});
+	
 	/* Nav Menu */
 	$(document).on('click', '.nav-menu-button', function() {
 		if($('#user-nav').hasClass('open')) {
@@ -172,6 +186,11 @@
 		}, 200);
 	});
 	
+	/* Search Click */
+	$(document).on('click', '.searchbox-submit', function() {
+		searchSubmit();
+	});
+	
 	
 	/* Register Button Click */
 	$(document).on('click', '.registerBtn', function() {
@@ -183,17 +202,41 @@
 		userLogin();
 	});
 	
+	/* Click on Alert */
+	$(document).on('click', '.note_link', function() {
+		var alert_id = $(this).data('id');
+		var link = $(this).data('link');
+		//mark read, then forward
+		notifyClick(alert_id, link);
+	});
+	
+	
+	/* Global Page Init */
+	$( document ).on( "pagecontainershow", function() {
+    	console.log("PAGE LOAD");
+	});
+	
+	
 	/* Init of homepage */
-	$(document).on("pageinit", "#home",function(event){
+	$(document).on("pagebeforeshow", "#home",function(event){
 		//console.log('about to show page...');
+		loadHomeScreen();
 	});
 	
-	/* INit of Profile */
-	$(document).on("pageinit", "#profile",function(event){
-		alert("Get the profile");
+	/* Init of Profile */
+	$(document).on("pagebeforeshow", "#profile",function(event){
+		var user_id = getParameterByName('user_id');
+		var user_slug = getParameterByName('user_slug');
+//console.log(user_id);		
+		$('#global-header').show();
+		$.mobile.loading('show');
+		
+		loadProfile(user_id, user_slug, function(html){
+			//console.log('html 2 : ' + html );
+			$('#profile-content').html(html);
+			$.mobile.loading('hide');
+		});
 	});
-	
-	
 	
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
@@ -276,7 +319,7 @@
 			var obj = $.parseJSON(data);
 			$('#user-nav').find('ul').remove();
 			if(obj.resp === 'success') {
-				$('.nav-avatar').html('<a href="index.html"><img src="' + common.siteURL + '/lib/php/timthumb.php?src=' + common.siteURL + '/' + obj.user.avatar + '&amp;h=45&amp;w=45&amp;zc=1"></a>');
+				$('.nav-avatar').html('<a href="index.html" data-transition="slide" data-direction="reverse" ><img src="' + common.siteURL + '/lib/php/timthumb.php?src=' + common.siteURL + '/' + obj.user.avatar + '&amp;h=45&amp;w=45&amp;zc=1"></a>');
 				$('#user-nav').append(obj.html);
 			}
 			else {
@@ -456,6 +499,163 @@
 		});
 	}
 	
+	function loadProfile(user_id, user_slug, callback) {
+		//var user_id = 96;
+		//var user_slug = null;
+		//console.log(user_id + ' - ' + user_slug);
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'get', action : 'build_profile', user_id : user_id, user_slug : user_slug}),
+			type: "GET",
+			dataType: "html",
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			//console.log("BUILD PROFILE DATA: " + data);
+			var obj = $.parseJSON(data);
+			if(obj.resp === 'success') {
+				if(obj.html != '') {
+					var html = obj.html;
+				}	
+				else {
+					var html = '';
+				}	
+			}
+			//loadUserNav();
+			//loadUserAlerts();
+			console.log("HTML HERE: " + html);
+			//return html;
+			callback(html);
+		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("BUILD PROFILE Error: " + textStatus + ' - ' + thrownError);
+		});
+		
+	}
+	
+	function postStatus() {
+		var user = common.storage.getItem("app_user");
+		var status = $('#statusFrm input[name="status"]').val();
+		//console.log("STATUS: " + status);
+		$('.divOverlay').remove();
+		$('.text-danger').remove();
+		if(status === '') {
+			$('#statusFrm').after('<div class="text-danger">Please enter a message</div>');
+			return false;
+		}
+		$.mobile.loading('show');
+		//$(body).prepend('<div class="pageOverlay"></div>')
+		//$('#status-input').prepend('<div class="divOverlay white"><div class="loading"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div></div>');
+		var formData = new FormData();
+		var myform = $('#statusFrm');
+		var idata = myform.serializeArray();
+		$.each(idata,function(key,input){
+			formData.append(input.name,input.value);
+		});
+		formData.append('action', 'post_status');
+		formData.append('post_user_id', user);
+		$('.status_pic').each(function( index ) {
+			console.log("INDEX: " + index);
+			formData.append('status_pic[' + index + ']', $('#status_pic_' + index)[0].files[0]);
+		});
+		$.ajax({
+  			type: 'POST',
+  			url: common.serviceURL + '?format=json&method=post&action=post_status',
+  			data: formData,
+            contentType: false,
+            processData: false,
+			dataType: "html",
+		})
+  		.done(function( data ) {
+    		console.log( "Data Saved: " + data );
+			var obj = $.parseJSON(data);
+			//$('#status-panel').find('.divOverlay').remove();
+			$.mobile.loading('hide');
+			if(obj.resp === 'success') {
+				$('#statusFrm input[name="status"]').val('');
+				$('#statusPicPreview').html('');
+				$('#statusFrm .preview_url').remove();
+				$('#statusFrm .text-danger').remove();
+				$('#statusFrm iframe').remove();
+				//$('#statusFrm textarea[name="status"]').before('<div class="alert alert-success">' + obj.msg + '</div>');
+				if(obj.html !== '') {					
+					$('#first_post_marker').after('<div id="lt">' + obj.html + '</div>');
+					$('#lt').hide().fadeIn();
+					$('.no-content-mssg').remove();
+				}
+				$('body').prepend('<div class="popup-alert">' + obj.msg + '</div>');
+				setTimeout(function(){ 
+					$('.popup-alert').fadeOut(300, function() { $(this).remove(); });
+				}, 3000);
+			}
+			else {
+				$('#statusFrm').before('<div class="alert alert-danger">' + obj.msg + '</div>');
+			}
+			$('.divOverlay').remove();
+		});
+	}
+	
+	function searchSubmit() {
+		var search_term = $('.searchbox-input').val();
+		if(search_term === '') {
+			return false;
+		}
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'get', action : 'search', search_term : search_term}),
+			type: "GET",
+			dataType: "html",
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			console.log("SEARCh DATA: " + data);
+			var obj = $.parseJSON(data);
+			if(obj.resp === 'success') {
+				
+				if(obj.html != '') {
+					$('#search-content').html(obj.html);
+				}	
+				else {
+					var html = '';
+				}
+				$.mobile.navigate("search.html", {transition: "slide"});
+			}
+		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("SEARCH Error: " + textStatus + ' - ' + thrownError);
+		});
+		
+		
+	}
+	
+	function notifyClick(alert_id, link) {
+		console.log(alert_id + ' - ' + link);
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'post', action : 'note_read', id : alert_id}),
+			type: "GET",
+			dataType: "html",
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			console.log("NOTE READ DATA: " + data);
+			var obj = $.parseJSON(data);
+			if(obj.resp === 'success') {
+				$.mobile.navigate(link, {transition: "slide"});
+			}
+		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("NOTE READ Error: " + textStatus + ' - ' + thrownError);
+		});
+	}
+		
+	
 	function setRegistrationId() {
 		var user = common.storage.getItem("app_user");
 		var registrationId = common.storage.getItem("registrationId");
@@ -476,6 +676,40 @@
 		request.fail(function(jqXHR, textStatus, thrownError) {			
 			console.log("Push Token Error: " + textStatus + ' - ' + thrownError);
 		});
+	}
+	
+	window.URL    = window.URL || window.webkitURL;
+	var useBlob   = false && window.URL;
+	
+	function handleStatusPics(id) {		
+		var file = document.getElementById('status_pic_' + id).files[0];
+		//console.log(file);
+		if ( (/\.(png|jpeg|jpg|gif)$/i).test(file.name) ) {
+			//readStatusImage( file, id ); 
+			var reader = new FileReader();
+			reader.addEventListener('load', function () {
+				//$('#statusPicPreview').html('');
+				var image  = new Image();
+				image.src = useBlob ? window.URL.createObjectURL(file) : reader.result;
+				//console.log(image.src);
+				$('#statusPicPreview').append('<div class="pp_pic" id="pp_pic_' + id + '"><img src="' + image.src + '"><div class="del-pp-pic" data-id="' + id + '"><i class="fa fa-times"></i></div></div>');
+			});
+
+			reader.readAsDataURL(file);
+			
+		} else {
+			errors += file.name +" Unsupported Image extension\n";  
+		}
+	}
+	
+	function getParameterByName(name, url) {
+		if (!url) { url = window.location.href; }
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			results = regex.exec(url);
+		if (!results) { return null; }
+		if (!results[2]) { return ''; }
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
 	
 	function ValidURL(str) {
