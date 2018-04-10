@@ -633,7 +633,7 @@ ul li .comment-date {
 }
 
 #status-photo {
-	display: none;
+	display: none !important;
 }
 
 .postPhoto {
