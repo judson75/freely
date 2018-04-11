@@ -109,11 +109,56 @@
 		return false;
 	});
 	
-	$(document).mouseup(function(){
+	$(document).mouseup(function(e){
 		if(isOpen == true){
 			submitIcon.click();
 			submitIcon.removeClass('open');
 		}
+		//Nav Menu
+		if(e.target.id != 'user-nav' && !$('#user-nav').find(e.target).length && e.target.className != 'nav-menu-button' && !$('.nav-menu-button').find(e.target).length) {
+			if($('#user-nav').hasClass('open')) {
+				if($(window).width() <= 368) {
+					mright = '-100%';
+				}
+				else {
+					mright = '-310px';
+				}
+				$('#user-nav').removeClass('open');
+				$('#user-nav').animate({
+					'right': mright
+				}, 'fast');
+				$('body').removeClass('noscroll');
+			}
+		}
+		//Alerts Menu
+		if(e.target.className != 'nav-alerts' && !$('.nav-alerts').find(e.target).length) {
+			if($('.nav-alerts').hasClass('open')) {
+				$('.nav-alerts').removeClass('open');
+				if($(window).width() <= 368) {
+					var mright = '-100%';
+				}
+				else {
+					var mright = '-310px';
+				}
+				
+				$('#alerts_menu').animate({
+					'right': mright
+				}, 'fast');
+				$('body').removeClass('noscroll');
+			}
+		}
+		//Post Meta Popup
+		if(e.target.className != 'dropdown-menu' && !$('.dropdown-menu').find(e.target).length && e.target.className != 'showPostMenu' && !$('.showPostMenu').find(e.target).length) {
+			$('.dropdown-menu').hide();
+			$('.showPostMenu').removeClass('open');
+		}
+		//Mobile profile nav
+        if(e.target.id != 'mobile-profile-nav' && !$('#mobile-profile-nav').find(e.target).length) {
+            if($('#profile-nav ul').hasClass('open')) {
+                $('#profile-nav ul').hide();
+                $('#profile-nav ul').removeClass('open');
+            }
+        }
 		
 	});
 	
@@ -132,7 +177,7 @@
 			pic_count++;
 		},
 		function(message) {
-			alert('get picture failed');
+			//alert('get picture failed');
 		}, {
 		 	quality: 100,
 			destinationType: navigator.camera.DestinationType.NATIVE_URI,
@@ -252,6 +297,120 @@
 		});
 	});
 	
+	/* Init of Members */
+	$(document).on("pagebeforeshow", "#members",function(event){
+		var show = getParameterByName('show');
+//console.log(show);		
+		$('#global-header').show();
+		$.mobile.loading('show');
+		
+		loadMembers(show, function(html){
+			//console.log('html 2 : ' + html );
+			$('#member-content').html(html);
+			$.mobile.loading('hide');
+		});
+	});
+	
+	/* Init of Groups */
+	$(document).on("pagebeforeshow", "#groups",function(event){
+		var show = getParameterByName('show');
+//console.log(show);		
+		$('#global-header').show();
+		$.mobile.loading('show');
+		
+		loadGroups(show, function(html){
+			//console.log('html 2 : ' + html );
+			$('#group-content').html(html);
+			$.mobile.loading('hide');
+		});
+	});
+	
+	/* Init of Group Page */
+	$(document).on("pagebeforeshow", "#group",function(event){
+		var group_id = getParameterByName('group_id');
+		var group_slug = getParameterByName('group_slug');
+console.log(group_id + ' - ' + group_slug);	
+		$('#global-header').show();
+		$.mobile.loading('show');
+		
+		loadGroup(group_id, group_slug, function(html){
+			//console.log('html 2 : ' + html );
+			$('#group-page-content').html(html);
+			$.mobile.loading('hide');
+		});
+	});
+	
+	/* Like Button */
+	$(document).on('click', '.likePostBtn', function() {
+		var id = $(this).attr('data-id');
+		var user_id = $(this).attr('data-user');
+		if($(this).find('i').hasClass('flaticon-thumbs-up')) {
+			var _do = 'like';
+			var new_html = '<i class="flaticon-thumbs-up-hand-symbol" aria-hidden="true"></i> Liked';
+		}
+		else {
+			var _do = 'unlike';
+			var new_html = '<i class="flaticon-thumbs-up" aria-hidden="true"></i> Like';
+		}
+		$.ajax({
+  			type: 'POST',
+  			url: common.serviceURL + '?format=json&method=post&action=' + _do + '_post',
+  			data: { 'id': id, 'user_id': user_id, 'do': _do },
+			dataType: "html",
+		})
+  		.done(function( data ) {
+    		console.log( "Data Saved: " + data );
+			var obj = $.parseJSON(data);
+			//$(this).parent().html('<button class="btn sendFriendRequest" data-user="' . $_SESSION['smUser'] . '" data-id="' . $member['id'] . '">Send Request</button>');
+			$('#btn-status').remove();
+			$('#like-btn-' + id).html(new_html);
+		});
+	});
+	
+	/* Unlike Button */
+	$(document).on('click', '.dislikePostBtn', function() {
+		var id = $(this).attr('data-id');
+		var user_id = $(this).attr('data-user');
+		if($(this).find('i').hasClass('flaticon-thumb-down')) {
+			var _do = 'dislike';
+			var new_html = '<i class="flaticon-thumbs-down-silhouette" aria-hidden="true"></i> Disliked';
+		}
+		else {
+			var _do = 'un_dislike';
+			var new_html = '<i class="flaticon-thumb-down" aria-hidden="true"></i> Dislike';
+		}
+		$.ajax({
+  			type: 'POST',
+  			url: common.serviceURL + '?format=json&method=post&action=' + _do + '_post',
+  			data: { 'id': id, 'user_id': user_id, 'do': _do},
+			dataType: "html",
+		})
+  		.done(function( data ) {
+    		console.log( "Data Saved: " + data );
+			var obj = $.parseJSON(data);
+			//$(this).parent().html('<button class="btn sendFriendRequest" data-user="' . $_SESSION['smUser'] . '" data-id="' . $member['id'] . '">Send Request</button>');
+			$('#btn-status').remove();
+			$('#dislike-btn-' + id).html(new_html);
+		});
+	
+	});
+	
+	/* Edit Panel */
+	$(document).on('click', '.edit-panel i', function() {
+		if($(this).next('.edit-dropdown').hasClass('open')) {
+			$(this).next('.edit-dropdown').removeClass('open');
+			$(this).next('.edit-dropdown').hide();
+			$(this).addClass('flaticon-angle-arrow-down');
+			$(this).removeClass('flaticon-up-arrow');
+		}
+		else {
+			$(this).next('.edit-dropdown').addClass('open');
+			$(this).next('.edit-dropdown').slideDown();
+			$(this).removeClass('flaticon-angle-arrow-down');
+			$(this).addClass('flaticon-up-arrow');
+		}
+	});
+	
 	/* Handle Initial Screen, by checking login */
 	function displayHomePage() {
 //alert(common.storage.getItem("app_user"));
@@ -295,7 +454,7 @@
 			}
 		});
 		request.done(function(data) { 
-			//console.log("home DATA: " + data);
+			console.log("home DATA: " + data);
 			//alert("home DATA: " + data);
 			//console.log("G");
 			var obj = $.parseJSON(data);
@@ -527,7 +686,113 @@
 			}
 		});
 		request.done(function(data) { 
-			//console.log("BUILD PROFILE DATA: " + data);
+			console.log("BUILD PROFILE DATA: " + data);
+			var obj = $.parseJSON(data);
+			if(obj.resp === 'success') {
+				if(obj.html != '') {
+					var html = obj.html;
+				}	
+				else {
+					var html = '';
+				}	
+			}
+			//loadUserNav();
+			//loadUserAlerts();
+			console.log("HTML HERE: " + html);
+			//return html;
+			callback(html);
+		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("BUILD PROFILE Error: " + textStatus + ' - ' + thrownError);
+		});
+		
+	}
+	
+	function loadMembers(show, callback) {
+		var user = common.storage.getItem("app_user");
+		
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'get', action : 'members_page', user_id : user, show : show}),
+			type: "GET",
+			dataType: "html",
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			console.log("BUILD MEMBERS DATA: " + data);
+			var obj = $.parseJSON(data);
+			if(obj.resp === 'success') {
+				if(obj.html != '') {
+					var html = obj.html;
+				}	
+				else {
+					var html = '';
+				}	
+			}
+			//loadUserNav();
+			//loadUserAlerts();
+			console.log("HTML HERE: " + html);
+			//return html;
+			callback(html);
+		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("BUILD PROFILE Error: " + textStatus + ' - ' + thrownError);
+		});
+		
+	}
+	
+	
+	function loadGroups(show, callback) {
+		var user = common.storage.getItem("app_user");
+		
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'get', action : 'groups_page', user_id : user, show : show}),
+			type: "GET",
+			dataType: "html",
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			console.log("BUILD MEMBERS DATA: " + data);
+			var obj = $.parseJSON(data);
+			if(obj.resp === 'success') {
+				if(obj.html != '') {
+					var html = obj.html;
+				}	
+				else {
+					var html = '';
+				}	
+			}
+			//loadUserNav();
+			//loadUserAlerts();
+			console.log("HTML HERE: " + html);
+			//return html;
+			callback(html);
+		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("BUILD PROFILE Error: " + textStatus + ' - ' + thrownError);
+		});
+		
+	}
+	
+	function loadGroup(group_id, group_slug, callback) {
+		var user = common.storage.getItem("app_user");
+		
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'get', action : 'group_page', group_id : group_id, group_slug : group_slug}),
+			type: "GET",
+			dataType: "html",
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			console.log("BUILD MEMBERS DATA: " + data);
 			var obj = $.parseJSON(data);
 			if(obj.resp === 'success') {
 				if(obj.html != '') {
@@ -550,6 +815,7 @@
 	}
 	
 	function postStatus() {
+		$('#status-extra').hide();
 		var user = common.storage.getItem("app_user");
 		var status = $('#statusFrm input[name="status"]').val();
 		//Check for images...
@@ -589,20 +855,15 @@
   		.done(function( data ) {
     		console.log( "Data Saved: " + data );
 			var obj = $.parseJSON(data);
+			var html = obj.html;
 			//$('#status-panel').find('.divOverlay').remove();
-			$.mobile.loading('hide');
 			if(obj.resp === 'success') {
 				$('#statusFrm input[name="status"]').val('');
 				$('#statusPicPreview').html('');
 				$('#statusFrm .preview_url').remove();
 				$('#statusFrm .text-danger').remove();
 				$('#statusFrm iframe').remove();
-				//$('#statusFrm textarea[name="status"]').before('<div class="alert alert-success">' + obj.msg + '</div>');
-				if(obj.html !== '') {					
-					$('#first_post_marker').after('<div id="lt">' + obj.html + '</div>');
-					$('#lt').hide().fadeIn();
-					$('.no-content-mssg').remove();
-				}
+				
 				//Images
 				var i=0;
 				if(arr.length > 0) {
@@ -612,17 +873,29 @@
 						uploadPhoto(imgURI, obj.id);
 					}
 					//Get post now....
-					$.get( common.serviceURL + '?format=json&method=get&action=post', { id: obj.id }, function( data ) {
-					  var obj = $.parseJSON(data);
-					  alert( obj.html );
-					  
-					});
-				}
+					setTimeout(function(){ 
+						$.getJSON( common.serviceURL + '?format=json&method=get&action=post', { id: obj.id } )
+						  .done(function( data ) {
+								//alert( "Data Loaded 2: " + data.html );
+								//alert( obj.html );
+								if(data.html !== '') {
+									var html = data.html;
+									addNewPost(html);
+									
+								}
+						  })
+						  .fail(function( jqxhr, textStatus, error ) {
+								var err = textStatus + ", " + error;
+								alert( "Request Failed: " + err );
+						});
+						
+					}, 2000);
+					
 				
-				$('body').prepend('<div class="popup-alert">' + obj.msg + '</div>');
-				setTimeout(function(){ 
-					$('.popup-alert').fadeOut(300, function() { $(this).remove(); });
-				}, 3000);
+				}
+				else {
+					addNewPost(html);
+				}
 			}
 			else {
 				$('#statusFrm').before('<div class="alert alert-danger">' + obj.msg + '</div>');
@@ -730,7 +1003,20 @@
 			console.log(JSON.stringify(error));
 			alert("ERROR: " + JSON.stringify(error));
 		}, options);
- }
+ 	}
+	
+	function addNewPost(html) {
+		if(html !== '') {
+			$.mobile.loading('hide');
+			$('#first_post_marker').after('<div id="lt">' + html + '</div>');
+			$('#lt').hide().fadeIn();
+			$('.no-content-mssg').remove();
+		}
+		$('body').prepend('<div class="popup-alert">' + obj.msg + '</div>');
+		setTimeout(function(){ 
+			$('.popup-alert').fadeOut(300, function() { $(this).remove(); });
+		}, 3000);
+	}
 	
 	function getParameterByName(name, url) {
 		if (!url) { url = window.location.href; }

@@ -31,7 +31,7 @@ button:focus {
     outline: none;
 }
 
-a {
+a, .ui-page-theme-a a {
 	text-decoration: none;
 	color: #4390bc;
 }
@@ -122,8 +122,17 @@ textarea {
 	text-shadow: none !important;
 }
 
+.btn-default {
+	background: #666;
+	
+}
+
 .btn-full {
 	width: 100%;
+}
+
+.btn-sm, a.btn-small {
+	font-size: 12px;
 }
 
 .text-danger {
@@ -551,7 +560,7 @@ input[type=checkbox]:checked + label:before {
 	display: block;
 	font-size: 13px;
 	color: #666;
-	margin-top: 5px;
+	margin: 5px 0 5px 0;
 }
 
 
@@ -702,9 +711,23 @@ ul li .comment-date {
 	width: 110%;
 }
 
+.panel .content-body {
+	padding: 10px;
+	margin-top: -20px;
+}
+
+.panel h3 {
+	margin: 0;
+}
+
+.panel-preheader {
+	padding: 10px;
+}
+
 .media-top {
 	position: relative;
 	padding: 10px;
+	height: 80px;
 }
 
 .media-avatar {
@@ -791,7 +814,7 @@ ul li .comment-date {
 }
 
 .media-content {
-	margin: 10px 0;
+	margin: 0 0 10px 0;
 	padding: 10px;
 }
 
@@ -863,6 +886,8 @@ ul li .comment-date {
 	float: right;
 	width: 49%;
 	text-align: right;
+	font-size: 16px;
+	margin-top: 8px;
 }
 .media-actions ul {
 	list-style: none;
@@ -904,6 +929,7 @@ ul li .comment-date {
 
 .media-comments .media-top {
 	padding: 0px;
+	height: auto;
 }
 
 .media-comments .media-avatar {
@@ -1064,7 +1090,7 @@ ul li .comment-date {
 	cursor: pointer;
 }
 
-#search-content ul {
+#search-content ul, #members-list ul, #groups-list ul {
 	list-style:  none;
 	margin: 0;
 	padding: 0;
@@ -1094,4 +1120,57 @@ ul li .comment-date {
 	font-size: 13px;
 	color: #666;
 	margin-top: 5px;
+}
+
+#members-list ul li, #groups-list ul li {
+	margin: 10px 0;
+}
+
+#msFrm, #gsFrm {
+	padding: 20px 0;
+}
+
+#msFrm input, #gsFrm input {
+	padding: 6px 15px;
+	border-radius: 20px;
+	font-size: 18px;
+	border: 1px solid #ccc;
+	width: calc(100% - 80px);
+	display: inline-block;
+	vertical-align:  middle;
+}
+
+.member-left {
+	padding-right: 60px;
+}
+
+.member-right {
+	position: absolute;
+	right: 10px;
+}
+
+.member-friend-count {
+	color: #ccc;
+	font-size: 11px;
+}
+
+.request-sent {
+	background: #e1e1e1;
+	color: #666  !important;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 12px;
+	border: 0;
+	cursor: pointer;
+	padding: 12px 18px;
+	border-radius: 20px;
+	margin-top: 3px;
+	line-height: 1.2em;
+	text-align: center  !important;
+	text-shadow: none !important;
+}
+
+.wholiked {
+	margin: 10px 0;
+	font-size: 12px;
 }
