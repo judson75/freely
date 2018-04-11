@@ -127,7 +127,7 @@
 	$(document).on('click', '.postPhoto', function(){
 		navigator.camera.getPicture(
 		function(imageURI) {
-			$('#statusFrm').append('<input type="text" name="status_pic_' + pic_count + '" id="status_pic_' + pic_count + '" value="' + imageURI + '">');
+			$('#statusFrm').append('<input type="hidden" name="status_pic_' + pic_count + '" id="status_pic_' + pic_count + '" value="' + imageURI + '">');
 			$('#statusPicPreview').append('<div class="pp_pic" id="pp_pic_' + pic_count + '"><img src="' + imageURI + '"><div class="del-pp-pic" data-id="' + pic_count + '"><i class="fa fa-times"></i></div></div>');
 			pic_count++;
 		},
@@ -607,12 +607,18 @@
 				var i=0;
 				if(arr.length > 0) {
 					for(i=0;i<arr.length;i++){     
-						alert($('#status_pic_' + i).val());
+						//alert($('#status_pic_' + i).val());
 						var imgURI = $('#status_pic_' + i).val();
 						uploadPhoto(imgURI, obj.id);
 					}
+					//Get post now....
+					$.get( common.serviceURL + '?format=json&method=get&action=post', { id: obj.id }, function( data ) {
+					  var obj = $.parseJSON(data);
+					  alert( obj.html );
+					  
+					});
 				}
-
+				
 				$('body').prepend('<div class="popup-alert">' + obj.msg + '</div>');
 				setTimeout(function(){ 
 					$('.popup-alert').fadeOut(300, function() { $(this).remove(); });
@@ -722,6 +728,7 @@
 			console.log(JSON.stringify(result));
 		}, function(error){
 			console.log(JSON.stringify(error));
+			alert("ERROR: " + JSON.stringify(error));
 		}, options);
  }
 	
