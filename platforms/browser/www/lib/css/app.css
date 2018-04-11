@@ -31,7 +31,7 @@ button:focus {
     outline: none;
 }
 
-a {
+a, .ui-page-theme-a a {
 	text-decoration: none;
 	color: #4390bc;
 }
@@ -720,6 +720,10 @@ ul li .comment-date {
 	margin: 0;
 }
 
+.panel-preheader {
+	padding: 10px;
+}
+
 .media-top {
 	position: relative;
 	padding: 10px;
@@ -882,7 +886,7 @@ ul li .comment-date {
 	float: right;
 	width: 49%;
 	text-align: right;
-	font-size: 14px;
+	font-size: 16px;
 	margin-top: 8px;
 }
 .media-actions ul {
@@ -1164,4 +1168,9 @@ ul li .comment-date {
 	line-height: 1.2em;
 	text-align: center  !important;
 	text-shadow: none !important;
+}
+
+.wholiked {
+	margin: 10px 0;
+	font-size: 12px;
 }
