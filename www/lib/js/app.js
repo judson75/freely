@@ -717,7 +717,7 @@
 		options.fileKey = "file";
 		options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
 		options.mimeType = "image/jpeg";
-		console.log(options.fileName);
+		//console.log(options.fileName);
 		var params = new Object();
 		params.post_id = post_id;
 		options.params = params;
