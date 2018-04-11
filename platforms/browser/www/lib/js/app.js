@@ -329,7 +329,7 @@
 	$(document).on("pagebeforeshow", "#group",function(event){
 		var group_id = getParameterByName('group_id');
 		var group_slug = getParameterByName('group_slug');
-console.log(group_id + ' - ' + group_slug);	
+//console.log(group_id + ' - ' + group_slug);	
 		$('#global-header').show();
 		$.mobile.loading('show');
 		
@@ -352,19 +352,30 @@ console.log(group_id + ' - ' + group_slug);
 			var _do = 'unlike';
 			var new_html = '<i class="flaticon-thumbs-up" aria-hidden="true"></i> Like';
 		}
-		$.ajax({
-  			type: 'POST',
-  			url: common.serviceURL + '?format=json&method=post&action=' + _do + '_post',
-  			data: { 'id': id, 'user_id': user_id, 'do': _do },
+		var request =  $.ajax({
+			data: ({format: 'json', method: 'post', action : _do + '_post', 'id': id, 'user_id': user_id, 'do': _do}),
+			type: "POST",
+			cache: false,
+			crossDomain: true,
 			dataType: "html",
-		})
-  		.done(function( data ) {
-    		console.log( "Data Saved: " + data );
+			url: common.serviceURL,
+			beforeSend: function() {
+				
+			}
+		});
+		request.done(function(data) { 
+			//console.log("LIKE  DATA: " + data);
 			var obj = $.parseJSON(data);
 			//$(this).parent().html('<button class="btn sendFriendRequest" data-user="' . $_SESSION['smUser'] . '" data-id="' . $member['id'] . '">Send Request</button>');
 			$('#btn-status').remove();
 			$('#like-btn-' + id).html(new_html);
 		});
+		request.fail(function(jqXHR, textStatus, thrownError) {			
+			console.log("LIKE Error: " + textStatus + ' - ' + thrownError + ' - ' + JSON.stringify(jqXHR));
+			$.mobile.loading('hide');
+		});
+
+		
 	});
 	
 	/* Unlike Button */
