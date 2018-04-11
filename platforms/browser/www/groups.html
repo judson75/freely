@@ -1,68 +1,68 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <title>Jasmine Spec Runner</title>
 
-        <!-- jasmine source -->
-        <link rel="shortcut icon" type="image/png" href="spec/lib/jasmine-1.2.0/jasmine_favicon.png">
-        <link rel="stylesheet" type="text/css" href="spec/lib/jasmine-1.2.0/jasmine.css">
-        <script type="text/javascript" src="spec/lib/jasmine-1.2.0/jasmine.js"></script>
-        <script type="text/javascript" src="spec/lib/jasmine-1.2.0/jasmine-html.js"></script>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' * data: ;" />
+    <link rel="stylesheet" type="text/css" href="lib/css/font/ropa_sans.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="lib/css/fbphotobox.css">
+    <link rel="stylesheet" href="lib/css/rcrop.min.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="lib/css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font/flaticon.css" />
+    <link rel="stylesheet" type="text/css" href="lib/css/app.css" />
+    <title>ProLibertyGroup</title>
+</head>
 
-        <!-- include source files here... -->
-        <script type="text/javascript" src="js/index.js"></script>
+<body>
+<div data-role="page" id="groups">
+	<div data-role="header" id="global-header" data-position="fixed" data-id="global-header">
+		<div data-role="">
+			<nav class="left">
+				<div class="nav-avatar"></div>	
+			</nav>
+			<nav class="center"></nav>
+			<nav class="right">
+				<ul>
+					<li class="nav-status-btn"><i class="flaticon-pencil"></i></li>
+					<li>
+						<form class="searchbox">
+							<input type="search" placeholder="Search......" name="search" class="searchbox-input" onkeyup="buttonUp();" required data-role="none">
+							<button type="button" class="searchbox-submit" data-role="none"><i class="flaticon-magnifying-glass"></i></button>
+						</form>
 
-        <!-- include spec files here... -->
-        <script type="text/javascript" src="spec/helper.js"></script>
-        <script type="text/javascript" src="spec/index.js"></script>
+						<span class="searchbox-icon"><i class="flaticon-magnifying-glass"></i></span>
 
-        <script type="text/javascript">
-            (function() {
-                var jasmineEnv = jasmine.getEnv();
-                jasmineEnv.updateInterval = 1000;
+					</li>
+					<li><a href="javascript:Void(0);" class="nav-alerts-button"><i class="flaticon-musical-bell-outline"></i></a></li>
+					<li><a href="javascript:Void(0);" class="nav-menu-button"><i class="flaticon-list-with-dots"></i></a></li>
+				</ul>
+			</nav>
+			<div class="clr"></div>
+			<div id="user-nav">
+				<div id="user-nav-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+			</div>
+			<div id="user-alerts">
+				<div id="user-alerts-close" class="pmenu-close"><i class="flaticon-remove-symbol"></i></div>
+			</div>
+		</div>
+	</div><!-- /header -->
 
-                var htmlReporter = new jasmine.HtmlReporter();
-
-                jasmineEnv.addReporter(htmlReporter);
-
-                jasmineEnv.specFilter = function(spec) {
-                    return htmlReporter.specFilter(spec);
-                };
-
-                var currentWindowOnload = window.onload;
-
-                window.onload = function() {
-                    if (currentWindowOnload) {
-                        currentWindowOnload();
-                    }
-                    execJasmine();
-                };
-
-                function execJasmine() {
-                    jasmineEnv.execute();
-                }
-            })();
-        </script>
-    </head>
-    <body>
-        <div id="stage" style="display:none;"></div>
-    </body>
+	<div role="main" class="ui-content" id="group-content"></div><!-- /content -->
+</div>
+   
+<script type="text/javascript" src="cordova.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="lib/js/background-blur.min.js"></script>
+<script type="text/javascript" src="lib/js/fbphotobox.js"></script>
+<script type="text/javascript" src="lib/js/rcrop.min.js"></script>
+<script type="text/javascript" src="lib/js/jqm.page.params.js"></script>
+<script type="text/javascript" src="lib/js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="lib/js/app.js"></script>
+</body>
 </html>
